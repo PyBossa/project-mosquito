@@ -1,28 +1,39 @@
-<div id="warning" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+<style>
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+</style>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-9">
-        <h2 id="question">Gluten free?</h2>
-    </div>
-    <div class="hidden-xs col-sm-3">
-        <p style="margin-top:30px;"><span id="i18n_working_task">Task</span> <span id="task-id">#</span></p>
+        <h2 id="question">¿Ves el sello "Sin Gluten"?</h2>
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper"></div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
 </div>
-<div class="row">
+<div class="row skeleton">
     <div id="answer" class="top20 col-xs-12">
         <button class="btn btn-answer " value="Yes">Yes</button><button class="btn btn-answer " value="No">No</button>
     </div>
@@ -65,7 +76,7 @@ pybossa.taskLoaded(function(task, deferred) {
             // continue as soon as the image is loaded
             deferred.resolve(task);
         });
-        img.attr('src', task.info.url_b).css('height', 'auto');
+        img.attr('src', task.info.images[0]).css('height', 'auto');
         img.css('max-width', '100%');
         task.info.image = img;
     }
@@ -74,32 +85,26 @@ pybossa.taskLoaded(function(task, deferred) {
     }
 });
 
-function warn_user(type, msg) {
-    var p = $("<p/>");
-    var title;
-
-    if (type === 'info') {
-        title = "Hi there! Please, read this carefully"
-    }
-
-    if (type === 'error') {
-        title = "Ooops! Something went wrong!"
-    }
-    if (type === 'warning') {
-        title = "Hi there! Please, read this carefully"
-    }
-    p.text(msg);
-    $(".modal-title").text(title);
-    $(".modal-body").html(p);
-    $("#warning").modal();
-}
 
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        i18n_translate();
-        $('#photo-link').html('').append(task.info.image);
-        $("#photo-link").attr("href", task.info.link);
-        $('#task-id').html(task.id);
+        //i18n_translate();
+        //$('#photo-link').html('').append(task.info.image);
+        //$("#photo-link").attr("href", task.info.link);
+        for (i=0;i<task.info.images.length;i++) {
+            var div = $("<div/>");
+            div.addClass("swiper-slide");
+            var img = $("<img/>");
+            img.attr("src", task.info.images[i]);
+            div.append(img);
+            $(".swiper-wrapper").append(div);
+        }
+
+        var swiper = new Swiper('.swiper-container', {
+                pagination: '.swiper-pagination',
+                paginationClickable: true
+            });
+
         $('.btn-answer').off('click').on('click', function(evt) {
             var $btn = $(this);
             var answer = $btn.attr("value");
@@ -109,13 +114,13 @@ pybossa.presentTask(function(task, deferred) {
                 });
             }
             else {
-                warn_user('error', 'Unexpected type of answer.');
+                pybossaNotify('Unexpected type of answer.', true, 'error');
             }
         });
     }
     else {
         $(".skeleton").hide();
-        warn_user('info', 'You have contributed to all available tasks! Thanks!');
+        pybossaNotify('You have contributed to all available tasks! Thanks!', true, 'info');
     }
 });
 
