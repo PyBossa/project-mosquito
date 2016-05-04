@@ -61,10 +61,16 @@
         margin-left:15px;
     }
 
+    .step1,
+    .step2 {
+        display:none;
+    }
+
 </style>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-9">
-        <h2 id="question">¿Ves el sello "Sin Gluten"?</h2>
+        <h2 class="step1">¿Ves el sello "Sin Gluten"?</h2>
+        <h2 class="step2">¿Trigo en los ingredientes?</h2>
         <!-- Swiper -->
         <div id="stage">
             <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
@@ -80,21 +86,15 @@
 </div>
 <div class="row btn-group-answer-bottom">
     <div class="col-xs-6 left">
-        <button type="button" class="btn btn-answer btn-white" value="yes">Yes</button>
+        <button type="button" class="btn btn-white btn-answer step1" value="yes">Yes</button>
+        <button type="button" class="btn btn-white btn-answer step2" value="no">Yo no veo trigo</button>
     </div>
     <div class="col-xs-6 right">
-        <button type="button" class="btn btn-answer btn-white" value="no">No</button>
+        <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
+        <button type="button" class="btn btn-white btn-answer step2" value="yes">Sí, ahí hay trigo o trazas</button>
     </div>
 </div>
 
-<!--<div class="btn-group btn-group-justified" role="group" aria-label="...">
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-answer btn-default" value="yes">Yes</button>
-    </div>
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-answer btn-default" value="no">No</button>
-    </div>
-</div>-->
 <script type="text/javascript">
 (function() {
 // Default language
@@ -123,14 +123,23 @@ function i18n_translate() {
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         // load image from flickr
-        var img = $('<img />');
-        img.load(function() {
-            // continue as soon as the image is loaded
+        task.answer = { 'glutenfreeSeal': 'no',
+                        'wheatIngredients': 'no',
+                        'nimages': 0}
+        if (task.info.images.length > 0) {
+            var img = $('<img />');
+            img.load(function() {
+                // continue as soon as the image is loaded
+                deferred.resolve(task);
+            });
+            img.attr('src', task.info.images[0]).css('height', 'auto');
+            img.css('max-width', '100%');
+            task.info.tmpImage = img;
+            task.answer.nimages = task.info.images.length;
+        }
+        else {
             deferred.resolve(task);
-        });
-        img.attr('src', task.info.images[0]).css('height', 'auto');
-        img.css('max-width', '100%');
-        task.info.image = img;
+        }
     }
     else {
         deferred.resolve(task);
@@ -138,12 +147,28 @@ pybossa.taskLoaded(function(task, deferred) {
 });
 
 
+function saveAnswerAndClean(task, swiper, deferred) {
+    $(".magnifik").magnifik('close');
+    $(".step1").hide();
+    $(".step2").hide();
+    pybossa.saveTask(task.id, task.answer).done(function() {
+        var deleteInstance = true;
+        var cleanupStyles = false;
+        swiper.destroy(deleteInstance, cleanupStyles);
+        deferred.resolve();
+    });
+
+}
+
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
+        $(".swiper-wrapper").html("");
         //i18n_translate();
         //$('#photo-link').html('').append(task.info.image);
         //$("#photo-link").attr("href", task.info.link);
 
+        $(".step1").show();
+        $(".step2").hide();
 
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
@@ -159,9 +184,12 @@ pybossa.presentTask(function(task, deferred) {
                 $("#stage").hide();
                 });
 
+
         $(".close-icon").bind('click', function(){
                 $(".magnifik").magnifik('close');
                 });
+
+
 
         for (i=0;i<task.info.images.length;i++) {
             var div = $("<div/>");
@@ -180,13 +208,41 @@ pybossa.presentTask(function(task, deferred) {
 
         $('.magnifik').magnifik({seekImage: false, stage: $("#stage")});
 
-        $('.btn-answer').off('click').on('click', function(evt) {
+        $(".zoom-icon").off('click').on('click', function(){
+                $(".magnifik").magnifik('open');
+                });
+
+        $('.btn-answer.step1').off('click').on('click', function(evt) {
             var $btn = $(this);
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
-                pybossa.saveTask(task.id, answer).done(function() {
-                    deferred.resolve();
-                });
+            
+                task.answer.glutenfreeSeal = answer
+                console.log("Step 1 completed");
+                console.log(task.answer);
+                if (answer === 'yes') {
+                   saveAnswerAndClean(task, swiper, deferred);
+                }
+                else {
+                    $(".step1").hide();
+                    $(".step2").show();
+                }
+            }
+            else {
+                pybossaNotify('Unexpected type of answer.', true, 'error');
+            }
+        });
+
+
+        $('.btn-answer.step2').off('click').on('click', function(evt) {
+            var $btn = $(this);
+            var answer = $btn.attr("value");
+            if (typeof answer != 'undefined') {
+                task.answer.wheatIngredients = answer;
+                console.log("Step 2 completed");
+                console.log(task.answer);
+
+                saveAnswerAndClean(task, swiper, deferred);
             }
             else {
                 pybossaNotify('Unexpected type of answer.', true, 'error');
