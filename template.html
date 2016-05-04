@@ -96,6 +96,7 @@ pybossa.presentTask(function(task, deferred) {
             div.addClass("swiper-slide");
             var img = $("<img/>");
             img.attr("src", task.info.images[i]);
+            img.addClass("magnifik");
             div.append(img);
             $(".swiper-wrapper").append(div);
         }
@@ -104,6 +105,8 @@ pybossa.presentTask(function(task, deferred) {
                 pagination: '.swiper-pagination',
                 paginationClickable: true
             });
+
+        $('img.magnifik').magnifik();
 
         $('.btn-answer').off('click').on('click', function(evt) {
             var $btn = $(this);
