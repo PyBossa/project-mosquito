@@ -177,11 +177,13 @@ pybossa.presentTask(function(task, deferred) {
         $("body").bind('magnifik:open', function(){
                 console.log("show");
                 $("#stage").show();
+                $(".swiper-container").hide();
                 });
 
         $("body").bind('magnifik:close', function(){
                 console.log("hide");
                 $("#stage").hide();
+                $(".swiper-container").show();
                 });
 
 
