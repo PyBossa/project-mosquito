@@ -2,6 +2,7 @@
     .swiper-container {
         width: 100%;
         height: 100%;
+        border: 1px solid gray;
     }
     .swiper-slide {
         text-align: center;
@@ -21,11 +22,33 @@
         -webkit-align-items: center;
         align-items: center;
     }
+    .btn-group-answer-bottom {
+        position:fixed;
+        bottom:0; 
+        height:auto; 
+        z-index:99; 
+        width:100%;
+        background: white;
+    }
+    .btn-group-answer-bottom .left {
+        border-right: 1px solid grey;
+    }
+
+    .btn-white {
+        background: white;
+        margin-top: 0;
+    }
+
+    #stage {
+        display: none;
+        border: 1px solid gray;
+    }
 </style>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-9">
         <h2 id="question">¿Ves el sello "Sin Gluten"?</h2>
         <!-- Swiper -->
+        <div id="stage"></div>
         <div class="swiper-container">
             <div class="swiper-wrapper"></div>
             <!-- Add Pagination -->
@@ -33,16 +56,23 @@
         </div>
     </div>
 </div>
-<div class="row skeleton">
-    <div id="answer" class="top20 col-xs-12">
-        <button class="btn btn-answer " value="Yes">Yes</button><button class="btn btn-answer " value="No">No</button>
+<div class="row btn-group-answer-bottom">
+    <div class="col-xs-6 left">
+        <button type="button" class="btn btn-answer btn-white" value="yes">Yes</button>
     </div>
-    <div class="top20 col-xs-12">
-        <a id="photo-link" href="#">
-            <img id="photo" src="http://i.imgur.com/GeHxzb7.png" style="max-width=100%">
-        </a>
+    <div class="col-xs-6 right">
+        <button type="button" class="btn btn-answer btn-white" value="no">No</button>
     </div>
 </div>
+
+<!--<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-answer btn-default" value="yes">Yes</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-answer btn-default" value="no">No</button>
+    </div>
+</div>-->
 <script type="text/javascript">
 (function() {
 // Default language
@@ -91,6 +121,22 @@ pybossa.presentTask(function(task, deferred) {
         //i18n_translate();
         //$('#photo-link').html('').append(task.info.image);
         //$("#photo-link").attr("href", task.info.link);
+
+
+        var w = document.documentElement.clientWidth;
+        var h = document.documentElement.clientHeight;
+
+        $("#stage").css("height", h);
+        $("body").bind('magnifik:open', function(){
+                console.log("show");
+                $("#stage").show();
+                });
+
+        $("body").bind('magnifik:close', function(){
+                console.log("hide");
+                $("#stage").hide();
+                });
+
         for (i=0;i<task.info.images.length;i++) {
             var div = $("<div/>");
             div.addClass("swiper-slide");
@@ -106,7 +152,7 @@ pybossa.presentTask(function(task, deferred) {
                 paginationClickable: true
             });
 
-        $('img.magnifik').magnifik();
+        $('.magnifik').magnifik({seekImage: false, stage: $("#stage")});
 
         $('.btn-answer').off('click').on('click', function(evt) {
             var $btn = $(this);
