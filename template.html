@@ -69,8 +69,6 @@
 </style>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-9">
-        <h2 class="step1">¿Ves el sello "Sin Gluten"?</h2>
-        <h2 class="step2">¿Trigo en los ingredientes?</h2>
         <!-- Swiper -->
         <div id="stage">
             <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
@@ -166,6 +164,16 @@ pybossa.presentTask(function(task, deferred) {
         //i18n_translate();
         //$('#photo-link').html('').append(task.info.image);
         //$("#photo-link").attr("href", task.info.link);
+
+        var question1 = $("<h4/>");
+        var question2 = $("<h4/>");
+        question1.text('¿Ves el sello "Sin Gluten"?');
+        question1.addClass('step1');
+        question2.text('¿Trigo en los ingredientes?');
+        question2.addClass('step2');
+        $("#question").html("");
+        $("#question").append(question1);
+        $("#question").append(question2);
 
         $(".step1").show();
         $(".step2").hide();
