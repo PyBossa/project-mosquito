@@ -375,7 +375,8 @@ pybossa.presentTask(function(task, deferred) {
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
-        $("#stage").css("height", h);
+        $("#stage").css("height", "340px");
+
         $("body").bind('magnifik:open', function(){
                 console.log("show");
                 $("#stage").show();
