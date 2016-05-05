@@ -76,6 +76,12 @@
         margin-top: 20px;
     }
 
+    @media (min-width: 768px) {
+        #stage {
+            margin-top: 35px;
+        }
+    }
+
     .close-icon {
         position:relative;
         background: rgba(0,0,0,0.5);
@@ -170,11 +176,12 @@
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
-        <div id="stage">
-            <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
-        </div>
         <div class="text-center hidden-sm hidden-md hidden-lg">
             <p class="zoom-info">Toca la imagen para ampliar.</p>
+        </div>
+
+        <div id="stage">
+            <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
         </div>
         <div class="swiper-container">
             <div class="swiper-wrapper">
@@ -381,12 +388,14 @@ pybossa.presentTask(function(task, deferred) {
                 console.log("show");
                 $("#stage").show();
                 $(".swiper-container").hide();
+                $(".swiper-pagination").hide();
                 });
 
         $("body").bind('magnifik:close', function(){
                 console.log("hide");
                 $("#stage").hide();
                 $(".swiper-container").show();
+                $(".swiper-pagination").show();
                 });
 
 
