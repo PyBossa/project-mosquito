@@ -296,6 +296,9 @@ pybossa.presentTask(function(task, deferred) {
                 paginationClickable: true
             });
 
+        swiper.slideTo(0);
+        swiper.update(true);
+
         $('.magnifik').magnifik({seekImage: false, stage: $("#stage")});
 
         $(".zoom-icon").off('click').on('click', function(){
