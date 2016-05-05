@@ -113,7 +113,60 @@
         font-size: 22px;
     }
 
+    .help-full{
+        display: none;
+        position: absolute;
+        top: 0;
+        background-color: #86B9D7;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 99999999999999999999999999999;
+        color: white;
+    }
+    .help-full p {
+        color: white;
+    }
+
+    .non-readable {
+        width: 100%;
+        position: fixed;
+        bottom: 60px;
+    }
+    .non-readable a {
+        font-size: 12px;
+    }
+
 </style>
+<div class="container help-full help1">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
+            <h2>Sr. Alérgeno</h2>
+            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
+            <h3>¿Sin Gluten?</h3>
+            <p>Este símbolo, o uno parecido, es lo que estoy buscando. Te mostraré una imagen (o varias) y sólo tienes que decirme si lo ves, ¿ok?</p>
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <a id="help1" href="#" class="btn btn-tutorial"> 
+                Entendido!</a>
+        </div>
+    </div>
+</div>
+<div class="container help-full help2">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
+            <h2>Sr. Alérgeno</h2>
+            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
+            <h3>¿Hay trigo en los ingredientes?</h3>
+            <p>Ahora vamos a comprobar las etiquetas. Dime si ves trigo en los ingredientes. ¡Las trazas tampoco nos gustan!</p>
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <a id="help2" href="#" class="btn btn-tutorial"> 
+                ¡Vale!</a>
+        </div>
+    </div>
+</div>
+
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
@@ -129,6 +182,9 @@
             <!-- Add Pagination -->
         </div>
         <div class="swiper-pagination"></div>
+    </div>
+    <div class="non-readable text-center">
+        <a class="btn-answer step2" value="non-readable" href="#">No consigo leer los ingredientes</a>
     </div>
     <div class="col-sm-6 hidden-xs">
         <div id="question-md"></div>
@@ -178,12 +234,68 @@ function i18n_translate() {
     }
 }
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
+
+function showHelp(step) {
+    if (step === 'step1') {
+        if (getCookie("glutenfreehelp1") != "") {
+            $(".help-full.help1").hide();
+        }
+        else {
+            $(".help-full.help1").show();
+        }
+    }
+    else {
+        if (getCookie("glutenfreehelp2") != "") {
+            $(".help-full.help2").hide();
+        }
+        else {
+            $(".help-full.help2").show();
+        }
+    }
+}
+
+
+$("#help1").off('click').on('click', function(){
+        setCookie("glutenfreehelp1", 1, 30);
+        $(".help-full.help1").hide();
+        });
+
+$("#help2").off('click').on('click', function(){
+        setCookie("glutenfreehelp2", 1, 30);
+        $(".help-full.help2").hide();
+        });
+
+
+
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         // load image from flickr
         task.answer = { 'glutenfreeSeal': 'no',
                         'wheatIngredients': 'no',
-                        'nimages': 0}
+                        'nimages': 0,
+                        'readableIngredients': true}
         task.step = 'step1';
         if (task.info.images.length > 0) {
             var img = $('<img />');
@@ -258,6 +370,8 @@ pybossa.presentTask(function(task, deferred) {
 
         $("." + task.step).show();
 
+        showHelp(task.step);
+
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
@@ -318,6 +432,7 @@ pybossa.presentTask(function(task, deferred) {
                 }
                 else {
                     task.step = 'step2';
+                    showHelp(task.step);
                     $(".step1").hide();
                     $(".step2").show();
                 }
@@ -339,7 +454,12 @@ pybossa.presentTask(function(task, deferred) {
             var $btn = $(this);
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
-                task.answer.wheatIngredients = answer;
+                if (answer === 'non-readable') {
+                    task.answer.readableIngredients = false;
+                }
+                else {
+                    task.answer.wheatIngredients = answer;
+                }
                 console.log("Step 2 completed");
                 console.log(task.answer);
 
