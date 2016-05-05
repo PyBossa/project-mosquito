@@ -3,7 +3,7 @@
         width: 100%;
         height: 100%;
         border: 1px solid #9ba9b0;
-        margin-top: 20px;
+        margin-top: 0px;
     }
     .swiper-slide {
         text-align: center;
@@ -45,6 +45,15 @@
         width:100%;
         background: white;
     }
+    .btn-group-answer-bottom .col-xs-6 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .btn-group-answer-bottom .col-xs-6 button {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
     .btn-group-answer-bottom .left {
         border-right: 1px solid #9ba9b0;
     }
@@ -78,7 +87,8 @@
     }
 
     .zoom-info {
-        margin-top: 16px;
+        margin-top: 10px;
+        font-size: 13px;
     }
 
     .mobileHoverFix:hover,
@@ -88,14 +98,22 @@
         color: #546e7b;
     }
 
+    #question-md {
+        margin-top:35px;
+    }
+
+    #question-md h4 {
+        font-size: 22px;
+    }
+
 </style>
 <div class="row skeleton">
-    <div class="col-xs-12 col-sm-9">
+    <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
         <div id="stage">
             <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
         </div>
-        <div class="text-center">
+        <div class="text-center hidden-md">
             <p class="zoom-info">Toca la imagen para ampliar.</p>
         </div>
         <div class="swiper-container">
@@ -105,15 +123,26 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
+    <div class="col-sm-6">
+        <div id="question-md"></div>
+            <p class="step1">En esta pantalla solo tienes que decirme si ves el símbolo “Sin gluten” en las imágenes que te voy a mostrar. Puede que haya varias imágenes. Se cargarán automáticamente después de cada respuesta.</p>
+            <p class="step2">Aquí necesito que leas la etiqueta y me digas si hay trigo o trazas en los ingredientes del prodcuto. Puede que haya vairas imágenes también.  No te preocupes, también se cargarán automáticamente después de cada respuesta.</p>
+            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="yes">Sí</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="no">Yo no veo trigo</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="no">No</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="yes">Hay trigo o trazas</button>
+        </div>
+
+    </div>
 </div>
-<div class="row btn-group-answer-bottom">
+<div class="row btn-group-answer-bottom hidden-md">
     <div class="col-xs-6 left">
-        <button type="button" class="btn btn-white btn-answer step1" value="yes">Yes</button>
+        <button type="button" class="btn btn-white btn-answer step1" value="yes">Sí</button>
         <button type="button" class="btn btn-white btn-answer step2" value="no">Yo no veo trigo</button>
     </div>
     <div class="col-xs-6 right">
         <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
-        <button type="button" class="btn btn-white btn-answer step2" value="yes">Sí, ahí hay trigo o trazas</button>
+        <button type="button" class="btn btn-white btn-answer step2" value="yes">Hay trigo o trazas</button>
     </div>
 </div>
 
@@ -198,6 +227,8 @@ pybossa.presentTask(function(task, deferred) {
         $("#question").html("");
         $("#question").append(question1);
         $("#question").append(question2);
+        $("#question-md").append(question1);
+        $("#question-md").append(question2);
 
         $(".step1").show();
         $(".step2").hide();
