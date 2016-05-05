@@ -26,6 +26,7 @@
 
     .swiper-pagination {
         position: relative;
+        margin-top: 5px;
     }
 
     .swiper-pagination-bullet {
@@ -78,6 +79,13 @@
 
     .zoom-info {
         margin-top: 16px;
+    }
+
+    .mobileHoverFix:hover,
+    .mobileHoverFix.hover,
+    .mobileHoverFix:focus,
+    .mobileHoverFix.focus{
+        color: #546e7b;
     }
 
 </style>
@@ -257,6 +265,13 @@ pybossa.presentTask(function(task, deferred) {
             else {
                 pybossaNotify('Unexpected type of answer.', true, 'error');
             }
+        });
+
+        $(".btn-answer").on("touchstart", function(){ 
+            $(this).removeClass("mobileHoverFix");
+        });
+        $(".btn-answer").on("touchend", function(){ 
+            $(this).addClass("mobileHoverFix");
         });
 
 
