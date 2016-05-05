@@ -5,6 +5,11 @@
         border: 1px solid #9ba9b0;
         margin-top: 0px;
     }
+    @media(min-width: 768px) {
+        .swiper-container {
+            margin-top: 35px;
+        }
+    }
     .swiper-slide {
         text-align: center;
         font-size: 18px;
@@ -44,6 +49,8 @@
         z-index:99; 
         width:100%;
         background: white;
+        margin-right: 0px;
+        margin-left: 0px;
     }
     .btn-group-answer-bottom .col-xs-6 {
         padding-left: 0;
@@ -123,10 +130,10 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 hidden-xs">
         <div id="question-md"></div>
-            <p class="step1">En esta pantalla solo tienes que decirme si ves el símbolo “Sin gluten” en las imágenes que te voy a mostrar. Puede que haya varias imágenes. Se cargarán automáticamente después de cada respuesta.</p>
-            <p class="step2">Aquí necesito que leas la etiqueta y me digas si hay trigo o trazas en los ingredientes del prodcuto. Puede que haya vairas imágenes también.  No te preocupes, también se cargarán automáticamente después de cada respuesta.</p>
+            <p class="step1 hidden-xs">En esta pantalla solo tienes que decirme si ves el símbolo “Sin gluten” en las imágenes que te voy a mostrar. Puede que haya varias imágenes. Se cargarán automáticamente después de cada respuesta.</p>
+            <p class="step2 hidden-xs">Aquí necesito que leas la etiqueta y me digas si hay trigo o trazas en los ingredientes del prodcuto. Puede que haya vairas imágenes también.  No te preocupes, también se cargarán automáticamente después de cada respuesta.</p>
             <button type="button" class="btn btn-info btn-lg btn-answer step1" value="yes">Sí</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step2" value="no">Yo no veo trigo</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step1" value="no">No</button>
@@ -224,11 +231,18 @@ pybossa.presentTask(function(task, deferred) {
         question1.addClass('step1');
         question2.text('¿Trigo en los ingredientes?');
         question2.addClass('step2');
-        $("#question").html("");
-        $("#question").append(question1);
-        $("#question").append(question2);
-        $("#question-md").append(question1);
-        $("#question-md").append(question2);
+
+        var mq = window.matchMedia( "(min-width: 768px)" );
+        if (mq.matches) {
+            $("#question-md").html("");
+            $("#question-md").append(question1);
+            $("#question-md").append(question2);
+        }
+        else {
+            $("#question").html("");
+            $("#question").append(question1);
+            $("#question").append(question2);
+        }
 
         $(".step1").show();
         $(".step2").hide();
