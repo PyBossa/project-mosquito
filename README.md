@@ -1,7 +1,7 @@
-PyBossa demo project SoySuper
+PyBossa demo project Mosquito
 =============================
 
-SoySuper demo test project
+Crowdcrafting Mosquito Project
 
 The project has five main files:
 
