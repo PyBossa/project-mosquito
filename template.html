@@ -385,35 +385,35 @@ function saveAnswerAndClean(task, swiper, deferred) {
 
 }
 
-function updateQuestions() {
-    var question1 = $("<h4/>");
-    var question2 = $("<h4/>");
-    question1.text('¿Ves un mosquito en esta foto?');
-    question1.addClass('step1');
-    question2.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
-    question2.addClass('step2');
+// function updateQuestions() {
+//     var question1 = $("<h4/>");
+//     var question2 = $("<h4/>");
+//     question1.text('¿Ves un mosquito en esta foto?');
+//     question1.addClass('step1');
+//     question2.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
+//     question2.addClass('step2');
 
-    var mq = window.matchMedia( "(min-width: 768px)" );
-    if (mq.matches) {
-        console.log(">=768");
-        $("#question-md").html("");
-        $("#question-md").append(question1);
-        $("#question-md").append(question2);
-    }
-    else {
-        console.log("<768");
-        $("#question").html("");
-        $("#question").append(question1);
-        $("#question").append(question2);
-    }
+//     var mq = window.matchMedia( "(min-width: 768px)" );
+//     if (mq.matches) {
+//         console.log(">=768");
+//         $("#question-md").html("");
+//         $("#question-md").append(question1);
+//         $("#question-md").append(question2);
+//     }
+//     else {
+//         console.log("<768");
+//         $("#question").html("");
+//         $("#question").append(question1);
+//         $("#question").append(question2);
+//     }
 
-    $(".step1").show();
+//     $(".step1").show();
 
-}
+// }
 
-$(window).resize(function() {
-    updateQuestions();
-});
+// $(window).resize(function() {
+//     updateQuestions();
+// });
 
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
