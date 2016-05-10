@@ -451,8 +451,7 @@ pybossa.presentTask(function(task, deferred) {
         // for (i=0;i<task.info.images.length;i++) {
             var div = $("<div/>");
             div.addClass("swiper-slide");
-            var img = $("<img/>");
-            img.attr("src", task.info.image);
+            var img = task.info.image.clone();
             img.addClass("magnifik");
             div.append(img);
             $(".swiper-wrapper").append(div);
@@ -476,7 +475,7 @@ pybossa.presentTask(function(task, deferred) {
             var $btn = $(this);
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
-            
+
                 task.answer.glutenfreeSeal = answer
                 console.log("Step 1 completed");
                 console.log(task.answer);
