@@ -417,119 +417,64 @@ $(window).resize(function() {
 
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        $(".swiper-wrapper").html("");
-        //i18n_translate();
+        loadUserProgress();
+    this_turnip = document.getElementById('turnip').textContent.trim();      
+        $('#photo-link').html('').append(task.info.image);
+        $("#photo-link").attr("href", 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/full');
+        $("#photo-link").attr("target", "_blank");
 
-        updateQuestions();
+        $('#task-id').html(task.id);
 
-        $("." + task.step).show();
+    $('.btn').removeClass('active');
 
-        showHelp(task.step);
-
-        var w = document.documentElement.clientWidth;
-        var h = document.documentElement.clientHeight;
-
-        $("#stage").css("height", "340px");
-
-        $("body").bind('magnifik:open', function(){
-                console.log("show");
-                $("#stage").show();
-                $(".swiper-container").hide();
-                $(".swiper-pagination").hide();
-                });
-
-        $("body").bind('magnifik:close', function(){
-                console.log("hide");
-                $("#stage").hide();
-                $(".swiper-container").show();
-                $(".swiper-pagination").show();
-                });
-
-
-        $(".close-icon").bind('click', function(){
-                $(".magnifik").magnifik('close');
-                });
-
-
-
-        for (i=0;i<task.info.images.length;i++) {
-            var div = $("<div/>");
-            div.addClass("swiper-slide");
-            var img = $("<img/>");
-            img.attr("src", task.info.images[i]);
-            img.addClass("magnifik");
-            div.append(img);
-            $(".swiper-wrapper").append(div);
+    // handle buttons as radio groups
+    $('.btn-answer1').off('click').on('click', function() {
+        $('.btn-answer1').removeClass('active');
+        $(this).addClass('active');
+        if($('.btn-answer1.active').attr("value") == "mosquito-yes"){
+            $('#q2a2').show(100);
+        } else{
+        $('#q2a2').hide(100);
         }
 
-        var swiper = new Swiper('.swiper-container', {
-                pagination: '.swiper-pagination',
-                paginationClickable: true
-            });
+    });
+    $('.btn-answer2').off('click').on('click', function() {
+        $('.btn-answer2').removeClass('active');
+        $(this).addClass('active');
+    });
 
-        swiper.slideTo(0);
-        swiper.update(true);
+    $('.btn-answer3').off('click').on('click', function() {
+        $('.btn-answer3').removeClass('active');
+        $(this).addClass('active');
+    });
 
-        $('.magnifik').magnifik({seekImage: false, stage: $("#stage")});
 
-        $(".zoom-icon").off('click').on('click', function(){
-                $(".magnifik").magnifik('open');
+
+    // handle answers
+        $('.btn-answer-submit').off('click').on('click', function() {
+            var answer = "{user_lang: " + userLocale + ", mosquito:" + $('.btn-answer1.active').attr("value") + ", tiger:" + $('.btn-answer2.active').attr("value") + ", site:" + $('.btn-answer3.active').attr("value") + "}";
+            if (typeof answer != 'undefined') {
+                //console.log(answer);
+                pybossa.saveTask(task.id, answer).done(function() {
+                    deferred.resolve();
                 });
+                $("#loading").fadeIn(500);
 
-        $('.btn-answer.step1').off('click').on('click', function(evt) {
-            var $btn = $(this);
-            var answer = $btn.attr("value");
-            if (typeof answer != 'undefined') {
-
-                task.answer.glutenfreeSeal = answer
-                console.log("Step 1 completed");
-                console.log(task.answer);
-                if (answer === 'yes') {
-                   saveAnswerAndClean(task, swiper, deferred);
-                }
-                else {
-                    task.step = 'step2';
-                    showHelp(task.step);
-                    $(".step1").hide();
-                    $(".step2").show();
-                }
+                /* if ($("#disqus_thread").is(":visible")) {
+                    $('#disqus_thread').toggle();
+                    $('.btn-disqus').toggle();
+                } */
             }
             else {
-                pybossaNotify('Unexpected type of answer.', true, 'error');
+                $("#error").show();
             }
         });
-
-        $(".btn-answer").on("touchstart", function(){
-            $(this).removeClass("mobileHoverFix");
-        });
-        $(".btn-answer").on("touchend", function(){
-            $(this).addClass("mobileHoverFix");
-        });
-
-
-        $('.btn-answer.step2').off('click').on('click', function(evt) {
-            var $btn = $(this);
-            var answer = $btn.attr("value");
-            if (typeof answer != 'undefined') {
-                if (answer === 'non-readable') {
-                    task.answer.readableIngredients = false;
-                }
-                else {
-                    task.answer.wheatIngredients = answer;
-                }
-                console.log("Step 2 completed");
-                console.log(task.answer);
-
-                saveAnswerAndClean(task, swiper, deferred);
-            }
-            else {
-                pybossaNotify('Unexpected type of answer.', true, 'error');
-            }
-        });
+        $("#loading").hide();
     }
     else {
         $(".skeleton").hide();
-        pybossaNotify('You have contributed to all available tasks! Thanks!', true, 'info');
+        $("#loading").hide();
+        $("#finish").fadeIn(500);
     }
 });
 
