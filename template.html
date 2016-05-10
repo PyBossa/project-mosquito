@@ -1,3 +1,4 @@
+
 <style>
     .swiper-container {
         width: 100%;
@@ -143,6 +144,7 @@
     }
 
 </style>
+<!--
 <div class="container help-full help1">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
@@ -171,7 +173,7 @@
         </div>
     </div>
 </div>
-
+ -->
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
@@ -446,15 +448,15 @@ pybossa.presentTask(function(task, deferred) {
 
 
 
-        for (i=0;i<task.info.images.length;i++) {
+        // for (i=0;i<task.info.images.length;i++) {
             var div = $("<div/>");
             div.addClass("swiper-slide");
             var img = $("<img/>");
-            img.attr("src", task.info.images[i]);
+            img.attr("src", task.info.image);
             img.addClass("magnifik");
             div.append(img);
             $(".swiper-wrapper").append(div);
-        }
+        // }
 
         var swiper = new Swiper('.swiper-container', {
                 pagination: '.swiper-pagination',
