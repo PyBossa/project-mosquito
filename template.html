@@ -354,32 +354,23 @@ $("#help2").off('click').on('click', function(){
 
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        // load image from flickr
-        task.answer = { 'glutenfreeSeal': 'no',
-                        'wheatIngredients': 'no',
-                        'nimages': 0,
-                        'readableIngredients': true}
-        task.step = 'step1';
-        if (task.info.images.length > 0) {
-            var img = $('<img />');
-            img.load(function() {
-                // continue as soon as the image is loaded
-                deferred.resolve(task);
-            });
-            img.attr('src', task.info.images[0]).css('height', 'auto');
-            img.css('max-width', '100%');
-            task.info.tmpImage = img;
-            task.answer.nimages = task.info.images.length;
-        }
-        else {
+        // load image
+        var img = $('<img />');
+        img.load(function() {
+            // continue as soon as the image is loaded
             deferred.resolve(task);
-        }
+        });
+        this_turnip = document.getElementById('turnip').textContent.trim();
+        img.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/medium');
+        img.addClass('img-thumbnail img-responsive');
+        task.info.image = img;
+    $('#q2a2').hide();
+
     }
     else {
         deferred.resolve(task);
     }
 });
-
 
 function saveAnswerAndClean(task, swiper, deferred) {
     $(".magnifik").magnifik('close');
