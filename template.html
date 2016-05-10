@@ -279,7 +279,14 @@ var messages = {"en": {
 
 // Update userLocale with server side information
 $(document).ready(function(){
-    userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
+//     userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
+// For Spanish only version, setting userLocal to 'es' and doing translation on page ready instead of present task (translation just to avoid changing all text above)
+userLocale = 'es';
+    var ids = Object.keys(messages[userLocale])
+    for (i=0; i<ids.length; i++) {
+        console.log("Translating: " + ids[i]);
+        document.getElementById(ids[i]).innerHTML = messages[userLocale][ids[i]];
+    }
 });
 
 function i18n_translate() {
