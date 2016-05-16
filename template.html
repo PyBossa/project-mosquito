@@ -95,7 +95,8 @@
     }
 
     .step1,
-    .step2 {
+    .step2,
+    .step3 {
         display:none;
     }
 
@@ -111,11 +112,11 @@
         color: #546e7b;
     }
 
-    #question-md {
+    #question {
         margin-top:35px;
     }
 
-    #question-md h4 {
+    #question h4 {
         font-size: 22px;
     }
 
@@ -194,26 +195,21 @@
     <div class="non-readable text-center">
         <a class="btn-answer step2" value="non-readable" href="#">No consigo leer los ingredientes</a>
     </div>
-    <div class="col-sm-6 hidden-xs">
-        <div id="question-md"></div>
-            <p class="step1 hidden-xs">En esta pantalla solo tienes que decirme si ves el símbolo “Sin gluten” en las imágenes que te voy a mostrar. Puede que haya varias imágenes. Se cargarán automáticamente después de cada respuesta.</p>
-            <p class="step2 hidden-xs">Aquí necesito que leas la etiqueta y me digas si hay trigo o trazas en los ingredientes del prodcuto. Puede que haya vairas imágenes también.  No te preocupes, también se cargarán automáticamente después de cada respuesta.</p>
-            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="yes">Sí</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="no">Yo no veo trigo</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="no">No</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="yes">Hay trigo o trazas</button>
+    <div class="col-xs-12 col-sm-6">
+        <div id="question"></div>
+            <p class="step1">step1 text placeholder</p>
+            <p class="step2">step2 text placeholder</p>
+            <p class="step3">step3 text placeholder</p>
+            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-yes">Sí</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-no">No</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-yes">Sí</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-no">No</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-unkown">No sé</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-yes">Sí</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-no">No</button>
+            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-unkown">No sé</button>
         </div>
 
-    </div>
-</div>
-<div class="row btn-group-answer-bottom hidden-sm hidden-md hidden-lg">
-    <div class="col-xs-6 left">
-        <button type="button" class="btn btn-white btn-answer step1" value="yes">Sí</button>
-        <button type="button" class="btn btn-white btn-answer step2" value="no">Yo no veo trigo</button>
-    </div>
-    <div class="col-xs-6 right">
-        <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
-        <button type="button" class="btn btn-white btn-answer step2" value="yes">Hay trigo o trazas</button>
     </div>
 </div>
 
@@ -351,6 +347,12 @@ $("#help2").off('click').on('click', function(){
 
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
+        // TODO: Default values?
+        task.answer = { 'user_lang': userLocale,
+                        mosquito: 'mosquito-unknown',
+                        tiger: 'tiger-unknown',
+                        site: 'site-unknown' }
+        task.step = 'step1';
         // load image
         var img = $('<img />');
         img.load(function() {
@@ -372,6 +374,7 @@ function saveAnswerAndClean(task, swiper, deferred) {
     $(".magnifik").magnifik('close');
     $(".step1").hide();
     $(".step2").hide();
+    $(".step3").hide();
     pybossa.saveTask(task.id, task.answer).done(function() {
         var deleteInstance = true;
         var cleanupStyles = false;
@@ -384,23 +387,28 @@ function saveAnswerAndClean(task, swiper, deferred) {
 function updateQuestions() {
     var question1 = $("<h4/>");
     var question2 = $("<h4/>");
+    var question3 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
     question1.addClass('step1');
-    question2.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
+    question2.text('¿Es un mosquito tigre?');
     question2.addClass('step2');
+    question3.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
+    question3.addClass('step3');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
     if (mq.matches) {
         console.log(">=768");
-        $("#question-md").html("");
-        $("#question-md").append(question1);
-        $("#question-md").append(question2);
+        $("#question").html("");
+        $("#question").append(question1);
+        $("#question").append(question2);
+        $("#question").append(question3);
     }
     else {
         console.log("<768");
         $("#question").html("");
         $("#question").append(question1);
         $("#question").append(question2);
+        $("#question").append(question3);
     }
 
     $(".step1").show();
@@ -476,10 +484,10 @@ pybossa.presentTask(function(task, deferred) {
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
 
-                task.answer.glutenfreeSeal = answer
+                task.answer.mosquito = answer
                 console.log("Step 1 completed");
                 console.log(task.answer);
-                if (answer === 'yes') {
+                if (answer === 'mosquite-no') {
                    saveAnswerAndClean(task, swiper, deferred);
                 }
                 else {
@@ -494,10 +502,10 @@ pybossa.presentTask(function(task, deferred) {
             }
         });
 
-        $(".btn-answer").on("touchstart", function(){ 
+        $(".btn-answer").on("touchstart", function(){
             $(this).removeClass("mobileHoverFix");
         });
-        $(".btn-answer").on("touchend", function(){ 
+        $(".btn-answer").on("touchend", function(){
             $(this).addClass("mobileHoverFix");
         });
 
@@ -506,13 +514,36 @@ pybossa.presentTask(function(task, deferred) {
             var $btn = $(this);
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
-                if (answer === 'non-readable') {
-                    task.answer.readableIngredients = false;
-                }
-                else {
-                    task.answer.wheatIngredients = answer;
-                }
+
+                task.answer.tiger = answer;
                 console.log("Step 2 completed");
+                console.log(task.answer);
+
+                task.step = 'step3';
+                showHelp(task.step);
+                $(".step2").hide();
+                $(".step3").show();
+
+            }
+            else {
+                pybossaNotify('Unexpected type of answer.', true, 'error');
+            }
+        });
+
+        $(".btn-answer").on("touchstart", function(){
+            $(this).removeClass("mobileHoverFix");
+        });
+        $(".btn-answer").on("touchend", function(){
+            $(this).addClass("mobileHoverFix");
+        });
+
+        $('.btn-answer.step3').off('click').on('click', function(evt) {
+            var $btn = $(this);
+            var answer = $btn.attr("value");
+            if (typeof answer != 'undefined') {
+
+                task.answer.site = answer;
+                console.log("Step 3 completed");
                 console.log(task.answer);
 
                 saveAnswerAndClean(task, swiper, deferred);
