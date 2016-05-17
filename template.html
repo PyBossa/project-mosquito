@@ -541,7 +541,7 @@ pybossa.presentTask(function(task, deferred) {
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
 
-                task.answer.mosquito = answer
+                task.answer.mosquito = answer;
                 console.log("Step 1 completed");
                 console.log(task.answer);
                 if (answer === 'mosquite-no') {
@@ -576,10 +576,15 @@ pybossa.presentTask(function(task, deferred) {
                 console.log("Step 2 completed");
                 console.log(task.answer);
 
-                task.step = 'step3';
-                showHelp(task.step);
-                $(".step2").hide();
-                $(".step3").show();
+                if (answer === 'tiger-yes') {
+                    task.step = 'step3';
+                    showHelp(task.step);
+                    $(".step2").hide();
+                    $(".step3").show();
+                }
+                else {
+                    saveAnswerAndClean(task, swiper, deferred);
+                }
 
             }
             else {
