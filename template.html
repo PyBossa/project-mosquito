@@ -1,7 +1,7 @@
 <style>
     .secondnav {
-        position: absolute;
-        top: -51px;
+        position: fixed;
+        top: 0px;
         z-index: 999;
         background-color: #43B191;
         width: 100%;
@@ -53,6 +53,7 @@
     }
     .btn-group-answer-bottom {
         border-top: 1px solid #9ba9b0;
+        position:fixed;
         bottom:0; 
         width:100%;
         background: white;
@@ -476,6 +477,7 @@ pybossa.presentTask(function(task, deferred) {
         $(".swiper-wrapper").html("");
         //i18n_translate();
 
+        $("footer").hide();
         updateQuestions();
 
         $("." + task.step).show();
@@ -610,7 +612,7 @@ pybossa.presentTask(function(task, deferred) {
         pybossaNotify('You have contributed to all available tasks! Thanks!', true, 'info');
     }
 });
-
+$(".navbar").hide();
 pybossa.run('mosquito-alert');
 })();
 </script>
