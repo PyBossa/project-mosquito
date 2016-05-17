@@ -410,7 +410,9 @@ pybossa.taskLoaded(function(task, deferred) {
         task.answer = { 'user_lang': userLocale,
                         mosquito: 'mosquito-unknown',
                         tiger: 'tiger-unknown',
-                        site: 'site-unknown' }
+                        head: 'head-no',
+                        chest: 'chest-no',
+                        legs: 'legs-no'}
         task.step = 'step1';
         // load image
         var img = $('<img />');
