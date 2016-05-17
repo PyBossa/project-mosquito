@@ -53,7 +53,6 @@
     }
     .btn-group-answer-bottom {
         border-top: 1px solid #9ba9b0;
-        position:fixed;
         bottom:0; 
         width:100%;
         background: white;
@@ -87,7 +86,7 @@
 
     .btn-extra-step {
         display: inline-block;
-        background-color: gray;
+        background-color: #E9E9E9;
         border-radius: 0px;
         color: black !important;
         height: 40px;
@@ -228,9 +227,6 @@
     </div>
     <div class="col-xs-12 col-sm-6 btn-group-answer-bottom">
         <!--<div id="question"></div>-->
-            <p class="step1">step1 text placeholder</p>
-            <p class="step2">step2 text placeholder</p>
-            <p class="step3">step3 text placeholder</p>
             <div class="row">
                 <div class="col-xs-6 text-center left">
                     <button type="button" class="btn btn-white btn-answer step1" value="mosquite-yes">Sí</button>
@@ -612,7 +608,8 @@ pybossa.presentTask(function(task, deferred) {
         pybossaNotify('You have contributed to all available tasks! Thanks!', true, 'info');
     }
 });
-$(".navbar").hide();
+
+$("#back-breadcrumb").hide();
 pybossa.run('mosquito-alert');
 })();
 </script>
