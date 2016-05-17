@@ -1,5 +1,14 @@
-
 <style>
+    .secondnav {
+        position: absolute;
+        top: -51px;
+        z-index: 999;
+        background-color: #43B191;
+        width: 100%;
+        height: 60px;
+        right: 0;
+    }
+
     .swiper-container {
         width: 100%;
         height: 100%;
@@ -44,16 +53,13 @@
     }
     .btn-group-answer-bottom {
         border-top: 1px solid #9ba9b0;
-        position:fixed;
         bottom:0; 
-        height:auto; 
-        z-index:99; 
         width:100%;
         background: white;
         margin-right: 0px;
         margin-left: 0px;
     }
-    .btn-group-answer-bottom .col-xs-6 {
+    .btn-group-answer-bottom button {
         padding-left: 0;
         padding-right: 0;
     }
@@ -69,6 +75,21 @@
     .btn-white {
         background: white;
         margin-top: 0;
+        color: #43B191 !important;
+        border: 0px !important;
+        margin-bottom: 0px;
+    }
+
+    .no-margin {
+        margin: 0;
+    }
+
+    .btn-extra-step {
+        display: inline-block;
+        background-color: gray;
+        border-radius: 0px;
+        color: black !important;
+        height: 40px;
     }
 
     .btn-xlarge {
@@ -121,12 +142,14 @@
         color: #546e7b;
     }
 
-    #question {
+    /* #question {
         margin-top:35px;
-    }
+    }*/
 
     #question h4 {
-        font-size: 22px;
+        font-size: 20px;
+        color: white;
+        margin-top: 19px;
     }
 
     .help-full{
@@ -184,6 +207,7 @@
     </div>
 </div>
  -->
+<div id="question" class="secondnav text-center"></div>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
@@ -201,26 +225,38 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-    <div class="col-xs-12 col-sm-6">
-        <div id="question"></div>
+    <div class="col-xs-12 col-sm-6 btn-group-answer-bottom">
+        <!--<div id="question"></div>-->
             <p class="step1">step1 text placeholder</p>
             <p class="step2">step2 text placeholder</p>
             <p class="step3">step3 text placeholder</p>
-            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-yes">Sí</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-no">No</button>
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <button type="button" class="btn btn-info btn-xlarge btn-block btn-answer step2" value="tiger-yes">
-                        <img src="http://i.imgur.com/yxMiOEA.png" width="100"/>
-                    </button>
+                <div class="col-xs-6 text-center left">
+                    <button type="button" class="btn btn-white btn-answer step1" value="mosquite-yes">Sí</button>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <button type="button" class="btn btn-info btn-xlarge btn-block btn-answer step2" value="tiger-no">
-                        <img src="http://i.imgur.com/6WnwFJv.png" width="100"/>
-                    </button>
+                <div class="col-xs-6 text-center">
+                    <button type="button" class="btn btn-white btn-answer step1" value="mosquite-no">No</button>
                 </div>
             </div>
-            <button type="button" class="btn btn-info btn-lg btn-block btn-answer step2" value="tiger-unkown">No sé</button>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+                    <button type="button" class="btn btn-white btn-answer step2" value="tiger-yes">
+                        <img src="http://i.imgur.com/yxMiOEA.png" width="50"/>
+                        <p class="no-margin">
+                        Tigre
+                        </p>
+                    </button>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+                    <button type="button" class="btn btn-white btn-answer step2" value="tiger-no">
+                        <img src="http://i.imgur.com/6WnwFJv.png" width="50"/>
+                        <p class="no-margin">
+                        Fiebre Amarilla
+                        </p>
+                    </button>
+                </div>
+            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Aquí no hay nada de esto!</button>
+            </div>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-yes">Sí</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-no">No</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-unkown">No sé</button>
