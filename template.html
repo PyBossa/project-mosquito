@@ -71,6 +71,15 @@
         margin-top: 0;
     }
 
+    .btn-xlarge {
+        padding: 18px 28px;
+        font-size: 22px; //change this to your desired size
+        line-height: normal;
+        -webkit-border-radius: 8px;
+           -moz-border-radius: 8px;
+                border-radius: 8px;
+    }
+
     #stage {
         display: none;
         border: 1px solid #9ba9b0;
@@ -192,9 +201,6 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-    <div class="non-readable text-center">
-        <a class="btn-answer step2" value="non-readable" href="#">No consigo leer los ingredientes</a>
-    </div>
     <div class="col-xs-12 col-sm-6">
         <div id="question"></div>
             <p class="step1">step1 text placeholder</p>
@@ -202,9 +208,19 @@
             <p class="step3">step3 text placeholder</p>
             <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-yes">Sí</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step1" value="mosquite-no">No</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-yes">Sí</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-no">No</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step2" value="tiger-unkown">No sé</button>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <button type="button" class="btn btn-info btn-xlarge btn-block btn-answer step2" value="tiger-yes">
+                        <img src="http://i.imgur.com/yxMiOEA.png" width="100"/>
+                    </button>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <button type="button" class="btn btn-info btn-xlarge btn-block btn-answer step2" value="tiger-no">
+                        <img src="http://i.imgur.com/6WnwFJv.png" width="100"/>
+                    </button>
+                </div>
+            </div>
+            <button type="button" class="btn btn-info btn-lg btn-block btn-answer step2" value="tiger-unkown">No sé</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-yes">Sí</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-no">No</button>
             <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-unkown">No sé</button>
