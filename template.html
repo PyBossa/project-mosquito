@@ -72,7 +72,8 @@
         padding-right: 0;
     }
 
-    .btn-group-answer-bottom .col-xs-6 button {
+    .btn-group-answer-bottom .col-xs-6 button,
+    .btn-group-answer-bottom .col-xs-4 button{
         padding-left: 0px;
         padding-right: 0px;
         min-height: 100px;
@@ -206,7 +207,7 @@
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
             <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
-            <h3>¿Ves un posible lugar de cría de mosquito tigre en esta foto?</h3>
+            <h3>¿Qué parte has reconocido?</h3>
             <p>...</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
@@ -263,9 +264,18 @@
                 </div>
             <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Aquí no hay nada de esto!</button>
             </div>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-yes">Sí</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-no">No</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-unkown">No sé</button>
+
+            <div class="row">
+                <div class="col-xs-4 text-center left">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-yes">Cabeza</button>
+                </div>
+                <div class="col-xs-4 text-center left">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Torax</button>
+                </div>
+                      <div class="col-xs-4 text-center">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Patas</button>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -328,7 +338,7 @@ var messages = {"en": {
  //                       "i18n_hide_comments": "Ocultar comentarios",
                         "i18n_question1": "¿Ves un mosquito en esta foto?",
                         "i18n_question2": "¿Es un mosquito tigre?",
-                        "i18n_question3": "¿Ves un posible lugar de cría de mosquito tigre en esta foto?",
+                        "i18n_question3": "¿Qué parte has reconocido?",
             "i18n_submit": "Enviar respuestas",
                       },
                };
@@ -453,7 +463,7 @@ function updateQuestions() {
     question1.addClass('step1');
     question2.text('¿Es un mosquito tigre?');
     question2.addClass('step2');
-    question3.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
+    question3.text('¿Qué parte has reconocido?');
     question3.addClass('step3');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
