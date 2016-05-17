@@ -1,7 +1,7 @@
 <style>
     .secondnav {
-        position: absolute;
-        top: -51px;
+        position: fixed;
+        top: 0px;
         z-index: 999;
         background-color: #43B191;
         width: 100%;
@@ -608,6 +608,7 @@ pybossa.presentTask(function(task, deferred) {
     }
 });
 
+$(".navbar").hide();
 $("#back-breadcrumb").hide();
 pybossa.run('mosquito-alert');
 })();
