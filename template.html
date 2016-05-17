@@ -63,6 +63,8 @@
         background: white;
         margin-right: 0px;
         margin-left: 0px;
+        position: fixed;
+        z-index: 1;
     }
     .btn-group-answer-bottom button {
         padding-left: 0;
@@ -614,8 +616,9 @@ pybossa.presentTask(function(task, deferred) {
     }
 });
 
-$(".navbar").hide();
+$(".navbar-default").hide();
 $("#back-breadcrumb").hide();
+$("footer").hide();
 pybossa.run('mosquito-alert');
 })();
 </script>
