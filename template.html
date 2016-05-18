@@ -4,6 +4,10 @@
         margin-top: 60px;
     }
 
+    .green {
+        color:#43B191;
+    }
+
     .secondnav {
         position: fixed;
         top: 0px;
@@ -307,16 +311,19 @@
                     <button id="tiger-torax" type="button" class="btn btn-white step3" value="mosquite-yes">
                         <img id="tiger-torax-icon" src="/static/img/mosquito-alert/tiger-torax.svg" width="70"/>
                         <img id="tiger-torax-icon-check" src="/static/img/mosquito-alert/tiger-torax-check.svg" style="display:none" width="70"/>
-                        <p class="no-margin">Torax</p>
+                        <p class="no-margin" style="margin-left:-14px;"><i id="tiger-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
                     </button>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Torax</button>
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step3" value="mosquite-no">
+                        <img id="tiger-abdomen-icon" src="/static/img/mosquito-alert/tiger-abdomen.svg" width="70"/>
+                        <img id="tiger-abdomen-icon-check" src="/static/img/mosquito-alert/tiger-abdomen-check.svg" style="display:none" width="70"/>
+                        <p class="no-margin" style="margin-left:-14px;"><i id="tiger-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
+                    </button>
                 </div>
-                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguno de los dos!</button>
+                <button id="tiger-none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguna de las dos!</button>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -390,6 +397,24 @@ userLocale = 'es';
 $("footer").hide();
 });
 
+function toggleVisibility(element) {
+    if (element.css('visibility') === 'hidden') {
+        element.css('visibility', 'visible');
+    }
+    else {
+        element.css('visibility', 'hidden');
+    }
+}
+
+function toggleFeaturesText(task) {
+    if ((task.answer.tigerTorax === 'yes') || (task.answer.tigerAbdomen === 'yes')) {
+        $("#tiger-none-features").text("Enviar clasificación");
+    }
+    else  {
+        $("#tiger-none-features").text("Ninguna de las dos");
+    }
+}
+
 function i18n_translate() {
     var ids = Object.keys(messages[userLocale])
     for (i=0; i<ids.length; i++) {
@@ -459,6 +484,11 @@ pybossa.taskLoaded(function(task, deferred) {
         task.answer = { 'user_lang': userLocale,
                         mosquito: 'mosquito-unknown',
                         tiger: 'tiger-unknown',
+                        tigerTorax: 'no',
+                        tigerAbdomen: 'no',
+                        yellow: 'yellow-unknown',
+                        yellowTorax: 'no',
+                        yellowAbdomen: 'no',
                         head: 'head-no',
                         chest: 'chest-no',
                         legs: 'legs-no'}
@@ -622,6 +652,31 @@ pybossa.presentTask(function(task, deferred) {
         $("#tiger-torax").off('click').on('click', function(){
                 $("#tiger-torax-icon").toggle();
                 $("#tiger-torax-icon-check").toggle();
+                toggleVisibility($("#tiger-torax-check"));
+                if ($("#tiger-torax-icon-check:visible").length == 0)
+                    {
+                    task.answer.tigerTorax = 'no';
+                }
+                else {
+                    task.answer.tigerTorax = 'yes';
+                }
+                toggleFeaturesText(task);
+                console.log(task.answer);
+                });
+
+        $("#tiger-abdomen").off('click').on('click', function(){
+                $("#tiger-abdomen-icon").toggle();
+                $("#tiger-abdomen-icon-check").toggle();
+                toggleVisibility($("#tiger-abdomen-check"));
+                if ($("#tiger-abdomen-icon-check:visible").length == 0)
+                    {
+                    task.answer.tigerAbdomen = 'no';
+                }
+                else {
+                    task.answer.tigerAbdomen = 'yes';
+                }
+                toggleFeaturesText(task);
+                console.log(task.answer);
                 });
 
 
