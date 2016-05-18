@@ -51,7 +51,7 @@
         display: none;
         position: absolute;
         top: 0;
-        background-color: #86B9D7;
+        background-color: #2B9884;
         left: 0;
         height: 100%;
         width: 100%;
@@ -217,7 +217,7 @@
         display: none;
         position: absolute;
         top: 0;
-        background-color: #86B9D7;
+        background-color: #2B9884;
         left: 0;
         height: 100%;
         width: 100%;
@@ -226,6 +226,7 @@
     }
     .help-full p {
         color: white;
+        font-size: 16px;
     }
 
     .non-readable {
@@ -243,9 +244,9 @@
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
-            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
+            <img src="/static/img/mosquito-alert/Target.svg" style="height:180px;">
             <h3>¿Ves un mosquito en esta foto?</h3>
-            <p>...</p>
+            <p>Parece fácil, ¿verdad? Pues dinos si ves un mosquito.</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help1" href="#" class="btn btn-tutorial"> 
@@ -257,9 +258,9 @@
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
-            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
-            <h3>¿Qué parte has reconocido?</h3>
-            <p>...</p>
+            <img src="/static/img/mosquito-alert/tiger-torax.svg" style="height:180px;">
+            <h3>¿Qué mosquito es?</h3>
+            <p>Tenemos dos opciones, mosquito tigre o el mosquito de la fiebre amarilla.</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help2" href="#" class="btn btn-tutorial"> 
@@ -270,9 +271,9 @@
 <div id="help3container" class="container help-full help3">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
-            <h2>Mosquito Alert</h2>
-            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
-            <h3>step3 text here</h3>
+            <h2>¿Qué partes reconoces?</h2>
+            <img src="/static/img/mosquito-alert/tiger-torax.svg" style="height:180px;">
+            <h3>Marca aquellas partes del mosquito que has identificado: su torax o abdomen.</h3>
             <p>...</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
@@ -314,15 +315,16 @@
         <!--<div id="question"></div>-->
             <div class="row">
                 <div class="col-xs-6 text-center left">
-                    <button type="button" class="btn btn-white btn-answer step1" value="mosquite-yes">Sí</button>
+                    <button type="button" class="btn btn-white btn-answer step1" value="yes">Sí</button>
                 </div>
                 <div class="col-xs-6 text-center">
-                    <button type="button" class="btn btn-white btn-answer step1" value="mosquite-no">No</button>
+                    <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
                 </div>
+                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step1" value="unknown">No lo sé</button>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button type="button" class="btn btn-white btn-answer step2" value="tiger-yes">
+                    <button type="button" class="btn btn-white btn-answer step2" value="tiger">
                         <img src="http://i.imgur.com/yxMiOEA.png" width="70"/>
                         <p class="no-margin">
                         Tigre
@@ -330,14 +332,14 @@
                     </button>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button type="button" class="btn btn-white btn-answer step2" value="yellow-yes">
+                    <button type="button" class="btn btn-white btn-answer step2" value="yellow">
                         <img src="http://i.imgur.com/6WnwFJv.png" width="70"/>
                         <p class="no-margin">
                         Fiebre Amarilla
                         </p>
                     </button>
                 </div>
-            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Ninguno de los dos!</button>
+            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡No estoy seguro!</button>
             </div>
 
             <div class="row">
@@ -548,16 +550,13 @@ pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         // TODO: Default values?
         task.answer = { 'user_lang': userLocale,
-                        mosquito: 'mosquito-unknown',
-                        tiger: 'tiger-unknown',
+                        mosquito: 'unknown',
+                        type: 'unknown',
                         tigerTorax: 'no',
                         tigerAbdomen: 'no',
-                        yellow: 'yellow-unknown',
                         yellowTorax: 'no',
-                        yellowAbdomen: 'no',
-                        head: 'head-no',
-                        chest: 'chest-no',
-                        legs: 'legs-no'}
+                        yellowAbdomen: 'no'
+                        }
         task.step = 'step1';
         // load image
         var img = $('<img />');
@@ -706,7 +705,7 @@ pybossa.presentTask(function(task, deferred) {
                 task.answer.mosquito = answer;
                 console.log("Step 1 completed");
                 console.log(task.answer);
-                if (answer === 'mosquite-no') {
+                if ((answer === 'no') || (answer === 'unknown')) {
                    saveAnswerAndClean(task, swiper, deferred);
                 }
                 else {
@@ -795,11 +794,11 @@ pybossa.presentTask(function(task, deferred) {
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
 
-                task.answer.tiger = answer;
+                task.answer.type = answer;
                 console.log("Step 2 completed");
                 console.log(task.answer);
 
-                if (answer === 'tiger-yes') {
+                if (answer === 'tiger') {
                     task.step = 'step3';
                     showHelp(task.step);
                     $(".step2").hide();
@@ -807,7 +806,7 @@ pybossa.presentTask(function(task, deferred) {
                     $(".step3.yellow").hide();
                     $(".step3.tiger").show();
                 }
-                else if (answer === 'yellow-yes') {
+                else if (answer === 'yellow') {
                     task.step = 'step3';
                     showHelp(task.step);
                     $(".step2").hide();
