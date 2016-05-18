@@ -1,7 +1,9 @@
 <style>
+
     body {
-        margin-top: 60px !important;
+        margin-top: 60px;
     }
+
     .secondnav {
         position: fixed;
         top: 0px;
@@ -55,22 +57,26 @@
         background: #546E7A;
     }
     .btn-group-answer-bottom {
-        position: fixed;
         border-top: 1px solid #9ba9b0;
         bottom:0; 
         width:100%;
         background: white;
         margin-right: 0px;
         margin-left: 0px;
+        position: fixed;
+        z-index: 1;
+        min-height: 100px;
     }
     .btn-group-answer-bottom button {
         padding-left: 0;
         padding-right: 0;
     }
 
-    .btn-group-answer-bottom .col-xs-6 button {
+    .btn-group-answer-bottom .col-xs-6 button,
+    .btn-group-answer-bottom .col-xs-4 button{
         padding-left: 0px;
         padding-right: 0px;
+        min-height: 100px;
     }
     .btn-group-answer-bottom .left {
         border-right: 1px solid #9ba9b0;
@@ -181,7 +187,7 @@
     }
 
 </style>
-<!--
+
 <div class="container help-full help1">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
@@ -201,7 +207,7 @@
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
             <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
-            <h3>¿Ves un posible lugar de cría de mosquito tigre en esta foto?</h3>
+            <h3>¿Qué parte has reconocido?</h3>
             <p>...</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
@@ -210,8 +216,15 @@
         </div>
     </div>
 </div>
- -->
-<div id="question" class="secondnav text-center"></div>
+ 
+<div class="secondnav text-center">
+    <a id="info" class="navbar-brand hidden-sm hidden-md hidden-lg" href="#"><i class="fa fa-info-circle fa-funnel"></i></a>
+     <div id="question" class="navbar-nav">
+     </div>
+    <div class="navbar-close-btn">
+            <a href="#"><i class="fa fa-times fa-funnel"></i></a>
+    </div>
+</div>
 <div class="row skeleton">
     <div class="col-xs-12 col-sm-6">
         <!-- Swiper -->
@@ -240,9 +253,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+                <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
                     <button type="button" class="btn btn-white btn-answer step2" value="tiger-yes">
-                        <img src="http://i.imgur.com/yxMiOEA.png" width="50"/>
+                        <img src="http://i.imgur.com/yxMiOEA.png" width="70"/>
                         <p class="no-margin">
                         Tigre
                         </p>
@@ -250,17 +263,26 @@
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
                     <button type="button" class="btn btn-white btn-answer step2" value="tiger-no">
-                        <img src="http://i.imgur.com/6WnwFJv.png" width="50"/>
+                        <img src="http://i.imgur.com/6WnwFJv.png" width="70"/>
                         <p class="no-margin">
-                        Fiebre Amarilla
+                        Fiebre Amarilla!
                         </p>
                     </button>
                 </div>
             <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Aquí no hay nada de esto!</button>
             </div>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-yes">Sí</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-no">No</button>
-            <button type="button" class="btn btn-info btn-lg btn-answer step3" value="site-unkown">No sé</button>
+
+            <div class="row">
+                <div class="col-xs-4 text-center left">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-yes">Cabeza</button>
+                </div>
+                <div class="col-xs-4 text-center left">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Torax</button>
+                </div>
+                      <div class="col-xs-4 text-center">
+                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Patas</button>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -323,7 +345,7 @@ var messages = {"en": {
  //                       "i18n_hide_comments": "Ocultar comentarios",
                         "i18n_question1": "¿Ves un mosquito en esta foto?",
                         "i18n_question2": "¿Es un mosquito tigre?",
-                        "i18n_question3": "¿Ves un posible lugar de cría de mosquito tigre en esta foto?",
+                        "i18n_question3": "¿Qué parte has reconocido?",
             "i18n_submit": "Enviar respuestas",
                       },
                };
@@ -333,6 +355,7 @@ $(document).ready(function(){
 //     userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
 // For Spanish only version, setting userLocal to 'es' and doing translation on page ready instead of present task (translation just to avoid changing all text above)
 userLocale = 'es';
+$("footer").hide();
 });
 
 function i18n_translate() {
@@ -404,7 +427,9 @@ pybossa.taskLoaded(function(task, deferred) {
         task.answer = { 'user_lang': userLocale,
                         mosquito: 'mosquito-unknown',
                         tiger: 'tiger-unknown',
-                        site: 'site-unknown' }
+                        head: 'head-no',
+                        chest: 'chest-no',
+                        legs: 'legs-no'}
         task.step = 'step1';
         // load image
         var img = $('<img />');
@@ -445,7 +470,7 @@ function updateQuestions() {
     question1.addClass('step1');
     question2.text('¿Es un mosquito tigre?');
     question2.addClass('step2');
-    question3.text('¿Ves un posible lugar de cría de mosquito tigre en esta foto?');
+    question3.text('¿Qué parte has reconocido?');
     question3.addClass('step3');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
@@ -477,7 +502,6 @@ pybossa.presentTask(function(task, deferred) {
         $(".swiper-wrapper").html("");
         //i18n_translate();
 
-        $("footer").hide();
         updateQuestions();
 
         $("." + task.step).show();
@@ -538,7 +562,7 @@ pybossa.presentTask(function(task, deferred) {
             var answer = $btn.attr("value");
             if (typeof answer != 'undefined') {
 
-                task.answer.mosquito = answer
+                task.answer.mosquito = answer;
                 console.log("Step 1 completed");
                 console.log(task.answer);
                 if (answer === 'mosquite-no') {
@@ -573,10 +597,15 @@ pybossa.presentTask(function(task, deferred) {
                 console.log("Step 2 completed");
                 console.log(task.answer);
 
-                task.step = 'step3';
-                showHelp(task.step);
-                $(".step2").hide();
-                $(".step3").show();
+                if (answer === 'tiger-yes') {
+                    task.step = 'step3';
+                    showHelp(task.step);
+                    $(".step2").hide();
+                    $(".step3").show();
+                }
+                else {
+                    saveAnswerAndClean(task, swiper, deferred);
+                }
 
             }
             else {
@@ -613,7 +642,7 @@ pybossa.presentTask(function(task, deferred) {
     }
 });
 
-$(".navbar").hide();
+$(".navbar-default").hide();
 $("#back-breadcrumb").hide();
 pybossa.run('mosquito-alert');
 })();
