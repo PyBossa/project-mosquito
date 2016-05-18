@@ -417,7 +417,7 @@ function getCookie(cname) {
 
 function showHelp(step) {
     if (step === 'step1') {
-        if (getCookie("glutenfreehelp1") != "") {
+        if (getCookie("mosquitohelp1") != "") {
             $(".help-full.help1").hide();
         }
         else {
@@ -425,7 +425,7 @@ function showHelp(step) {
         }
     }
     else {
-        if (getCookie("glutenfreehelp2") != "") {
+        if (getCookie("mosquitohelp2") != "") {
             $(".help-full.help2").hide();
         }
         else {
@@ -436,12 +436,12 @@ function showHelp(step) {
 
 
 $("#help1").off('click').on('click', function(){
-        setCookie("glutenfreehelp1", 1, 30);
+        setCookie("mosquitohelp1", 1, 30);
         $(".help-full.help1").hide();
         });
 
 $("#help2").off('click').on('click', function(){
-        setCookie("glutenfreehelp2", 1, 30);
+        setCookie("mosquitohelp2", 1, 30);
         $(".help-full.help2").hide();
         });
 
