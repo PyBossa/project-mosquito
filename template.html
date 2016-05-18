@@ -93,6 +93,7 @@
     .swiper-pagination-bullet {
         margin: 2px;
         background: #9ba9b0;
+        display: none;  // hide the pagination bullet for now
     }
     .swiper-pagination-bullet-active {
         background: #546E7A;
@@ -583,6 +584,25 @@ function saveAnswerAndClean(task, swiper, deferred) {
     $(".step3.tiger").hide();
     $(".step3.yellow").hide();
     pybossa.saveTask(task.id, task.answer).done(function() {
+        // Reset torax and abdomen buttons
+        $("#tiger-torax-icon").css("display", "inline");
+        $("#tiger-torax-icon-check").css("display", "none");
+        $("#tiger-torax-check").css("visibility", "hidden");
+
+        $("#tiger-abdomen-icon").css("display", "inline");
+        $("#tiger-abdomen-icon-check").css("display", "none");
+        $("#tiger-abdomen-check").css("visibility", "hidden");
+
+        $("#yellow-torax-icon").css("display", "inline");
+        $("#yellow-torax-icon-check").css("display", "none");
+        $("#yellow-torax-check").css("visibility", "hidden");
+
+        $("#yellow-abdomen-icon").css("display", "inline");
+        $("#yellow-abdomen-icon-check").css("display", "none");
+        $("#yellow-abdomen-check").css("visibility", "hidden");
+
+         $("#none-features").text("Ninguna de las dos");
+
         var deleteInstance = true;
         var cleanupStyles = false;
         swiper.destroy(deleteInstance, cleanupStyles);
