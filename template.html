@@ -546,7 +546,6 @@ $("#help3").off('click').on('click', function(){
 
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        // TODO: Default values?
         task.answer = { 'user_lang': userLocale,
                         mosquito: 'mosquito-unknown',
                         tiger: 'tiger-unknown',
