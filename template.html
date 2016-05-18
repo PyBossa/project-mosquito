@@ -68,10 +68,6 @@
         align-items: center;
     }
 
-    .swiper-pagination {
-        position: relative;
-        margin-top: 5px;
-    }
 
     .swiper-pagination-bullet {
         margin: 2px;
@@ -112,6 +108,14 @@
         color: #43B191 !important;
         border: 0px !important;
         margin-bottom: 0px;
+    }
+
+    .btn-white:active,
+    .btn-white:focus,
+    .btn-white:hover {
+        background: white;
+        box-shadow: none;
+        outline: none !important;
     }
 
     .no-margin {
@@ -265,8 +269,8 @@
             <div class="swiper-wrapper">
             </div>
             <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-pagination"></div>
     </div>
     <div class="col-xs-12 col-sm-6 btn-group-answer-bottom">
         <!--<div id="question"></div>-->
@@ -291,23 +295,25 @@
                     <button type="button" class="btn btn-white btn-answer step2" value="tiger-no">
                         <img src="http://i.imgur.com/6WnwFJv.png" width="70"/>
                         <p class="no-margin">
-                        Fiebre Amarilla!
+                        Fiebre Amarilla
                         </p>
                     </button>
                 </div>
-            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Aquí no hay nada de esto!</button>
+            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡Ninguno de los dos!</button>
             </div>
 
             <div class="row">
-                <div class="col-xs-4 text-center left">
-                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-yes">Cabeza</button>
+                <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
+                    <button id="tiger-torax" type="button" class="btn btn-white step3" value="mosquite-yes">
+                        <img id="tiger-torax-icon" src="/static/img/mosquito-alert/tiger-torax.svg" width="70"/>
+                        <img id="tiger-torax-icon-check" src="/static/img/mosquito-alert/tiger-torax-check.svg" style="display:none" width="70"/>
+                        <p class="no-margin">Torax</p>
+                    </button>
                 </div>
-                <div class="col-xs-4 text-center left">
+                <div class="col-md-6 col-sm-6 col-xs-6 text-center">
                     <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Torax</button>
                 </div>
-                      <div class="col-xs-4 text-center">
-                    <button type="button" class="btn btn-white btn-answer step3" value="mosquite-no">Patas</button>
-                </div>
+                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguno de los dos!</button>
             </div>
         </div>
 
@@ -494,7 +500,7 @@ function updateQuestions() {
     var question3 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
     question1.addClass('step1');
-    question2.text('¿Es un mosquito tigre?');
+    question2.text('¿Qué mosquito es?');
     question2.addClass('step2');
     question3.text('¿Qué parte has reconocido?');
     question3.addClass('step3');
@@ -612,6 +618,11 @@ pybossa.presentTask(function(task, deferred) {
         $(".btn-answer").on("touchend", function(){
             $(this).addClass("mobileHoverFix");
         });
+
+        $("#tiger-torax").off('click').on('click', function(){
+                $("#tiger-torax-icon").toggle();
+                $("#tiger-torax-icon-check").toggle();
+                });
 
 
         $('.btn-answer.step2').off('click').on('click', function(evt) {
