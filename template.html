@@ -243,7 +243,7 @@
         </div>
     </div>
 </div>
-<div id="help2container"class="container help-full help2">
+<div id="help2container" class="container help-full help2">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
@@ -257,6 +257,21 @@
         </div>
     </div>
 </div>
+<div id="help3container" class="container help-full help2">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
+            <h2>Mosquito Alert</h2>
+            <img src="/static/img/sr-showing-gluten.svg" style="height:180px;">
+            <h3>step3 text here</h3>
+            <p>...</p>
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <a id="help3" href="#" class="btn btn-tutorial"> 
+                ¡Vale!</a>
+        </div>
+    </div>
+</div>
+
  
 <div class="secondnav text-center">
     <div class="navbar-info-btn">
@@ -402,6 +417,7 @@ $("footer").hide();
 // Move help containers to top body to get them fully overlayed
 $('#help1container').insertAfter('body');
 $('#help2container').insertAfter('body');
+$('#help3container').insertAfter('body');
 });
 
 function i18n_translate() {
@@ -444,12 +460,20 @@ function showHelp(step) {
             $(".help-full.help1").show();
         }
     }
-    else {
+    else if (step === 'step2') {
         if (getCookie("mosquitohelp2") != "") {
             $(".help-full.help2").hide();
         }
         else {
             $(".help-full.help2").show();
+        }
+    }
+    else {
+        if (getCookie("mosquitohelp3") != "") {
+            $(".help-full.help3").hide();
+        }
+        else {
+            $(".help-full.help3").show();
         }
     }
 }
@@ -463,6 +487,10 @@ $("#help1").off('click').on('click', function(){
 $("#help2").off('click').on('click', function(){
         setCookie("mosquitohelp2", 1, 30);
         $(".help-full.help2").hide();
+        });
+$("#help3").off('click').on('click', function(){
+        setCookie("mosquitohelp3", 1, 30);
+        $(".help-full.help3").hide();
         });
 
 
@@ -582,8 +610,11 @@ pybossa.presentTask(function(task, deferred) {
                 if (task.step === 'step1') {
                     $(".help-full.help1").show();
                 }
-                else {
+                else (task.step === 'step2') {
                     $(".help-full.help2").show();
+                }
+                else {
+                    $(".help-full.help3").show();
                 }
                 });
 
