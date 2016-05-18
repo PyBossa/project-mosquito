@@ -185,7 +185,9 @@
 
     .step1,
     .step2,
-    .step3 {
+    .step3,
+    .step3.tiger,
+    .step3.yellow {
         display:none;
     }
 
@@ -328,7 +330,7 @@
                     </button>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button type="button" class="btn btn-white btn-answer step2" value="tiger-no">
+                    <button type="button" class="btn btn-white btn-answer step2" value="yellow-yes">
                         <img src="http://i.imgur.com/6WnwFJv.png" width="70"/>
                         <p class="no-margin">
                         Fiebre Amarilla
@@ -340,20 +342,33 @@
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button id="tiger-torax" type="button" class="btn btn-white step3" value="mosquite-yes">
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger" value="mosquite-yes">
                         <img id="tiger-torax-icon" src="/static/img/mosquito-alert/tiger-torax.svg" width="70"/>
                         <img id="tiger-torax-icon-check" src="/static/img/mosquito-alert/tiger-torax-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="tiger-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
                     </button>
+
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow" value="mosquite-yes">
+                        <img id="yellow-torax-icon" src="/static/img/mosquito-alert/yellow-torax.svg" width="70"/>
+                        <img id="yellow-torax-icon-check" src="/static/img/mosquito-alert/yellow-torax-check.svg" style="display:none" width="70"/>
+                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
+                    </button>
+
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button id="tiger-abdomen" type="button" class="btn btn-white step3" value="mosquite-no">
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step3 tiger" value="mosquite-no">
                         <img id="tiger-abdomen-icon" src="/static/img/mosquito-alert/tiger-abdomen.svg" width="70"/>
                         <img id="tiger-abdomen-icon-check" src="/static/img/mosquito-alert/tiger-abdomen-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="tiger-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
                     </button>
+
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step3 yellow" value="mosquite-no">
+                        <img id="yellow-abdomen-icon" src="/static/img/mosquito-alert/yellow-abdomen.svg" width="70"/>
+                        <img id="yellow-abdomen-icon-check" src="/static/img/mosquito-alert/yellow-abdomen-check.svg" style="display:none" width="70"/>
+                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
+                    </button>
                 </div>
-                <button id="tiger-none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguna de las dos!</button>
+                <button id="none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguna de las dos!</button>
             </div>
         </div>
     </div>
@@ -444,10 +459,13 @@ function toggleVisibility(element) {
 
 function toggleFeaturesText(task) {
     if ((task.answer.tigerTorax === 'yes') || (task.answer.tigerAbdomen === 'yes')) {
-        $("#tiger-none-features").text("Enviar clasificación");
+        $("#none-features").text("Enviar clasificación");
+    }
+    else if ((task.answer.yellowTorax === 'yes') || (task.answer.yellowAbdomen === 'yes')) {
+        $("#none-features").text("Enviar clasificación");
     }
     else  {
-        $("#tiger-none-features").text("Ninguna de las dos");
+        $("#none-features").text("Ninguna de las dos");
     }
 }
 
@@ -563,6 +581,8 @@ function saveAnswerAndClean(task, swiper, deferred) {
     $(".step1").hide();
     $(".step2").hide();
     $(".step3").hide();
+    $(".step3.tiger").hide();
+    $(".step3.yellow").hide();
     pybossa.saveTask(task.id, task.answer).done(function() {
         var deleteInstance = true;
         var cleanupStyles = false;
@@ -738,6 +758,37 @@ pybossa.presentTask(function(task, deferred) {
                 console.log(task.answer);
                 });
 
+        $("#yellow-torax").off('click').on('click', function(){
+                $("#yellow-torax-icon").toggle();
+                $("#yellow-torax-icon-check").toggle();
+                toggleVisibility($("#yellow-torax-check"));
+                if ($("#yellow-torax-icon-check:visible").length == 0)
+                    {
+                    task.answer.yellowTorax = 'no';
+                }
+                else {
+                    task.answer.yellowTorax = 'yes';
+                }
+                toggleFeaturesText(task);
+                console.log(task.answer);
+                });
+
+        $("#yellow-abdomen").off('click').on('click', function(){
+                $("#yellow-abdomen-icon").toggle();
+                $("#yellow-abdomen-icon-check").toggle();
+                toggleVisibility($("#yellow-abdomen-check"));
+                if ($("#yellow-abdomen-icon-check:visible").length == 0)
+                    {
+                    task.answer.yellowAbdomen = 'no';
+                }
+                else {
+                    task.answer.yellowAbdomen = 'yes';
+                }
+                toggleFeaturesText(task);
+                console.log(task.answer);
+                });
+
+
 
         $('.btn-answer.step2').off('click').on('click', function(evt) {
             var $btn = $(this);
@@ -753,9 +804,19 @@ pybossa.presentTask(function(task, deferred) {
                     showHelp(task.step);
                     $(".step2").hide();
                     $(".step3").show();
+                    $(".step3.yellow").hide();
+                    $(".step3.tiger").show();
+                }
+                else if (answer === 'yellow-yes') {
+                    task.step = 'step3';
+                    showHelp(task.step);
+                    $(".step2").hide();
+                    $(".step3").show();
+                    $(".step3.tiger").hide();
+                    $(".step3.yellow").show();
                 }
                 else {
-                    saveAnswerAndClean(task, swiper, deferred);
+                saveAnswerAndClean(task, swiper, deferred);
                 }
 
             }
