@@ -240,7 +240,7 @@
     }
 
 </style>
-
+<script src="/static/js/vendor/hammer.min.js"></script>
 <div id="help1container" class="container help-full help1">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
@@ -699,8 +699,15 @@ pybossa.presentTask(function(task, deferred) {
             div.addClass("swiper-slide");
             var img = task.info.image.clone();
             img.addClass("magnifik");
+            img.attr("id", task.id + "-" + i + "-" + "hammer");
             div.append(img);
             $(".swiper-wrapper").append(div);
+            var mc = new Hammer.Manager(document.getElementById(task.id + "-" + i + "-" + "hammer"));
+                         var pinch = new Hammer.Pinch();
+                         mc.add([pinch]);
+                         mc.on("pinch", function(ev) {
+                                 $(".magnifik").magnifik('open', ev);
+                         });
         // }
 
         var swiper = new Swiper('.swiper-container', {
