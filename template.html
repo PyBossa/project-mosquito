@@ -699,10 +699,10 @@ pybossa.presentTask(function(task, deferred) {
             div.addClass("swiper-slide");
             var img = task.info.image.clone();
             img.addClass("magnifik");
-            img.attr("id", task.id + "-" + i + "-" + "hammer");
+            img.attr("id", task.id + "-" + "hammer");
             div.append(img);
             $(".swiper-wrapper").append(div);
-            var mc = new Hammer.Manager(document.getElementById(task.id + "-" + i + "-" + "hammer"));
+            var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
                          var pinch = new Hammer.Pinch();
                          mc.add([pinch]);
                          mc.on("pinch", function(ev) {
