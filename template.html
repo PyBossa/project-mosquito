@@ -32,7 +32,7 @@
         position: absolute;
         top: 20px;
         float: left;
-        margin-left: 3.5%;
+        margin-left: 2.5%;
     }
 
     .navbar-close-btn {
@@ -45,6 +45,7 @@
     .btn-tutorial {
         background: white;
         color: #2E4B63;
+        text-transform: uppercase;
     }
 
     .help-full {
@@ -59,12 +60,33 @@
         color: white;
     }
 
+    .help2-1 h4,
+    .help2-2 h4{
+       font-size: 13px;
+       font-style: italic;
+    }
+
+    .help2-1 ul,
+    .help2-2 ul {
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .help2-1 ul > li,
+    .help2-2 ul > li {
+        margin-bottom: 8px;
+    }
+
+
+
+
     .swiper-container {
         width: 100%;
         height: 240px;
         border: 1px solid #9ba9b0;
         margin-top: 0px;
     }
+
     @media(min-width: 768px) {
         .swiper-container {
             margin-top: 35px;
@@ -209,9 +231,9 @@
     }*/
 
     #question h4 {
-        font-size: 20px;
+        font-size: 18px;
         color: white;
-        margin-top: 19px;
+        margin-top: 21px;
     }
 
     .help-full{
@@ -227,7 +249,7 @@
     }
     .help-full p {
         color: white;
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .non-readable {
@@ -247,11 +269,12 @@
             <h2>Mosquito Alert</h2>
             <img src="/static/img/mosquito-alert/Target.svg" style="height:180px;">
             <h3>¿Ves un mosquito en esta foto?</h3>
-            <p>Parece fácil, ¿verdad? Pues dinos si ves un mosquito.</p>
+            <p>Parece fácil, ¿verdad?</p> 
+            <p>Pues dinos si ves un mosquito.</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help1" href="#" class="btn btn-tutorial"> 
-                Entendido!</a>
+                ¡Vamos allá!</a>
         </div>
     </div>
 </div>
@@ -260,26 +283,111 @@
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
             <img src="/static/img/mosquito-alert/tiger-torax.svg" style="height:180px;">
-            <h3>¿Qué mosquito es?</h3>
-            <p>Tenemos dos opciones, mosquito tigre o el mosquito de la fiebre amarilla.</p>
+            <h3>¿Qué tipo de mosquito es?</h3>
+            <p>Tenemos dos opciones: mosquito tigre o el mosquito de la fiebre amarilla.</p>
+            <p>En la pantalla siguiente te explicamos cómo reconocerlos.</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help2" href="#" class="btn btn-tutorial"> 
-                ¡Vale!</a>
+                ¡OK!</a>
         </div>
     </div>
 </div>
+<div id="help2-1container" class="container help-full help2-1">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
+            <h2>Mosquito Alert</h2>
+            <h3>Mosquito Tigre </h3>
+            <h4>(Aedes albopictus)</h4>
+            <ul>
+                <li>Es pequeño (< 1 cm), negro y con rayas blancas horizontales en el abodmen.</li>
+                <li>Tiene una línea blanca vertical en cabeza y tórax.</li>
+                <li>Patas rayadas.</li>
+            </ul>
+            <h3>Ejemplos</h3>
+            <div class="row">
+            
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/tiger-torax.svg">
+                    <p>Tórax</p>
+                </div>
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/tiger-abdomen.svg">
+                    <p>Abdomen</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <a id="help2-1" href="#" class="btn btn-tutorial"> 
+                ¡OK!</a>
+        </div>
+    </div>
+</div>
+<div id="help2-2container" class="container help-full help2-2">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
+            <h2>Mosquito Alert</h2>
+            <h3>Mosquito de Fiebre Amarilla</h3>
+            <h4>(Aedes aegypti)</h4>
+            <ul>
+                <li>Es pequeño (< 1 cm), marrón negruzco y con rayas horizontales, blancas y anchas en el abdomen. A cada lado de estas líneas tiene manchas blancas redondas.</li>
+                <li>Tiene un dibujo en forma de lira en el tórax.</li>
+                <li>Patas rayadas.</li>
+            </ul>
+            <h3>Ejemplos</h3>
+            <div class="row">
+            
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/yellow-torax.svg">
+                    <p>Tórax</p>
+                </div>
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/yellow-abdomen.svg">
+                    <p>Abdomen</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12" style="text-align:center;">
+            <a id="help2-2" href="#" class="btn btn-tutorial"> 
+                ¡OK!</a>
+        </div>
+    </div>
+</div>
+
 <div id="help3container" class="container help-full help3">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
-            <h2>¿Qué partes reconoces?</h2>
-            <img src="/static/img/mosquito-alert/tiger-torax.svg" style="height:180px;">
-            <h3>Marca aquellas partes del mosquito que has identificado: su torax o abdomen.</h3>
-            <p>...</p>
+            <h2>¿Por qué partes lo has reconocido?</h2>
+            <p>Marca aquellas partes del mosquito que te han ayudado a identificarlo: su tórax o abdomen (puedes marcar las dos).</p>
+            <h3>Mosquito Tigre</h3>
+            <div class="row">
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/tiger-torax-check.svg">
+                    <p>Tórax</p>
+                </div>
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/tiger-abdomen.svg">
+                    <p>Abdomen</p>
+                </div>
+            </div>
+
+            <h3>Mosquito Fiebre Amarilla</h3>
+            <div class="row">
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/yellow-torax-check.svg">
+                    <p>Tórax</p>
+                </div>
+                <div class="col-xs-6">
+                    <img src="/static/img/mosquito-alert/yellow-abdomen-check.svg">
+                    <p>Abdomen</p>
+                </div>
+            </div>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help3" href="#" class="btn btn-tutorial"> 
-                ¡Vale!</a>
+                ¡Entendido!</a>
         </div>
     </div>
 </div>
@@ -306,7 +414,7 @@
             <div class="close-icon pull-right"><i class="fa fa-2x fa-fw fa-times-circle-o"></i></div>
         </div>
         <div class="swiper-container">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper swiper-wrapper-images">
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
@@ -321,7 +429,7 @@
                 <div class="col-xs-6 text-center">
                     <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
                 </div>
-                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step1" value="unknown">No lo sé</button>
+                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step1" value="unknown">No lo tengo claro</button>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
@@ -340,7 +448,7 @@
                         </p>
                     </button>
                 </div>
-            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">¡No estoy seguro!</button>
+            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">No lo tengo claro</button>
             </div>
 
             <div class="row">
@@ -354,7 +462,7 @@
                     <button id="yellow-torax" type="button" class="btn btn-white step3 yellow" value="mosquite-yes">
                         <img id="yellow-torax-icon" src="/static/img/mosquito-alert/yellow-torax.svg" width="70"/>
                         <img id="yellow-torax-icon-check" src="/static/img/mosquito-alert/yellow-torax-check.svg" style="display:none" width="70"/>
-                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
+                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Tórax</p>
                     </button>
 
                 </div>
@@ -371,7 +479,7 @@
                         <p class="no-margin" style="margin-left:-14px;"><i id="yellow-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
                     </button>
                 </div>
-                <button id="none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">¡Ninguna de las dos!</button>
+                <button id="none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">Ninguna de las dos</button>
             </div>
         </div>
     </div>
@@ -448,6 +556,8 @@ $("footer").hide();
 // Move help containers to top body to get them fully overlayed
 $('#help1container').insertAfter('body');
 $('#help2container').insertAfter('body');
+$('#help2-1container').insertAfter('body');
+$('#help2-2container').insertAfter('body');
 $('#help3container').insertAfter('body');
 });
 
@@ -539,6 +649,16 @@ $("#help1").off('click').on('click', function(){
 $("#help2").off('click').on('click', function(){
         setCookie("mosquitohelp2", 1, 30);
         $(".help-full.help2").hide();
+        $(".help-full.help2-1").show();
+        });
+$("#help2-1").off('click').on('click', function(){
+        setCookie("mosquitohelp2-1", 1, 30);
+        $(".help-full.help2-1").hide();
+        $(".help-full.help2-2").show();
+        });
+$("#help2-2").off('click').on('click', function(){
+        setCookie("mosquitohelp2-2", 1, 30);
+        $(".help-full.help2-2").hide();
         });
 $("#help3").off('click').on('click', function(){
         setCookie("mosquitohelp3", 1, 30);
@@ -617,9 +737,9 @@ function updateQuestions() {
     var question3 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
     question1.addClass('step1');
-    question2.text('¿Qué mosquito es?');
+    question2.text('¿Qué tipo de mosquito es?');
     question2.addClass('step2');
-    question3.text('¿Qué parte has reconocido?');
+    question3.text('¿Por qué partes lo has reconocido?');
     question3.addClass('step3');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
@@ -648,7 +768,7 @@ $(window).resize(function() {
 
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        $(".swiper-wrapper").html("");
+        $(".swiper-wrapper-images").html("");
         //i18n_translate();
 
         updateQuestions();
@@ -701,7 +821,7 @@ pybossa.presentTask(function(task, deferred) {
             img.addClass("magnifik");
             img.attr("id", task.id + "-" + "hammer");
             div.append(img);
-            $(".swiper-wrapper").append(div);
+            $(".swiper-wrapper-images").append(div);
             var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
                          var pinch = new Hammer.Pinch();
                          mc.add([pinch]);
@@ -883,5 +1003,6 @@ pybossa.presentTask(function(task, deferred) {
 $(".navbar-default").hide();
 $("#back-breadcrumb").hide();
 pybossa.run('mosquito-alert');
+
 })();
 </script>
