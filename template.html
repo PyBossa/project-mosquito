@@ -19,7 +19,7 @@
     }
 
     .fa-funnel {
-        font-size: 20px !important;
+        font-size: 24px !important;
         color: white;
     }
 
@@ -32,14 +32,14 @@
         position: absolute;
         top: 20px;
         float: left;
-        margin-left: 2.5%;
+        margin-left: 3%;
     }
 
     .navbar-close-btn {
         position: absolute;
         top: 19px;
         float: right;
-        margin-left: 93%;
+        margin-left: 92%;
     }
 
     .btn-tutorial {
@@ -134,14 +134,16 @@
     .btn-group-answer-bottom button {
         padding-left: 0;
         padding-right: 0;
+        height: 50px;
     }
 
     .btn-group-answer-bottom .col-xs-6 button,
     .btn-group-answer-bottom .col-xs-4 button{
         padding-left: 0px;
         padding-right: 0px;
-        min-height: 100px;
+        min-height: 60px;
     }
+
     .btn-group-answer-bottom .left {
         border-right: 1px solid #9ba9b0;
     }
@@ -186,6 +188,9 @@
     #stage {
         display: none;
         border: 1px solid #9ba9b0;
+    }
+    .step-icon {
+        min-height: 130px !important;
     }
 
     @media (min-width: 768px) {
@@ -283,13 +288,13 @@
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h2>Mosquito Alert</h2>
             <img src="/static/img/mosquito-alert/tiger-torax.svg" style="height:180px;">
-            <h3>¿Qué tipo de mosquito es?</h3>
-            <p>Tenemos dos opciones: mosquito tigre o el mosquito de la fiebre amarilla.</p>
+            <h3>¿Qué mosquito es?</h3>
+            <p>Buscamos mosquitos tigre o mosquitos de la fiebre amarilla, pero se pueden colar otras especies</p>
             <p>En la pantalla siguiente te explicamos cómo reconocerlos.</p>
         </div>
         <div class="col-md-12" style="text-align:center;">
             <a id="help2" href="#" class="btn btn-tutorial"> 
-                ¡OK!</a>
+                ¡Vale!</a>
         </div>
     </div>
 </div>
@@ -433,16 +438,16 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button type="button" class="btn btn-white btn-answer step2" value="tiger">
-                        <img src="http://i.imgur.com/yxMiOEA.png" width="70"/>
+                    <button type="button" class="btn btn-white btn-answer step2 step-icon" value="tiger">
+                        <img src="/static/img/mosquito-alert/tiger.png" width="70"/>
                         <p class="no-margin">
                         Tigre
                         </p>
                     </button>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button type="button" class="btn btn-white btn-answer step2" value="yellow">
-                        <img src="http://i.imgur.com/6WnwFJv.png" width="70"/>
+                    <button type="button" class="btn btn-white btn-answer step2 step-icon" value="yellow">
+                        <img src="/static/img/mosquito-alert/yellow.png" width="70"/>
                         <p class="no-margin">
                         Fiebre Amarilla
                         </p>
@@ -453,13 +458,13 @@
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger" value="mosquite-yes">
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 step-icon tiger" value="mosquite-yes">
                         <img id="tiger-torax-icon" src="/static/img/mosquito-alert/tiger-torax.svg" width="70"/>
                         <img id="tiger-torax-icon-check" src="/static/img/mosquito-alert/tiger-torax-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="tiger-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
                     </button>
 
-                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow" value="mosquite-yes">
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 step-icon yellow" value="mosquite-yes">
                         <img id="yellow-torax-icon" src="/static/img/mosquito-alert/yellow-torax.svg" width="70"/>
                         <img id="yellow-torax-icon-check" src="/static/img/mosquito-alert/yellow-torax-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="yellow-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Tórax</p>
@@ -467,13 +472,13 @@
 
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button id="tiger-abdomen" type="button" class="btn btn-white step3 tiger" value="mosquite-no">
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step3 step-icon tiger" value="mosquite-no">
                         <img id="tiger-abdomen-icon" src="/static/img/mosquito-alert/tiger-abdomen.svg" width="70"/>
                         <img id="tiger-abdomen-icon-check" src="/static/img/mosquito-alert/tiger-abdomen-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="tiger-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
                     </button>
 
-                    <button id="yellow-abdomen" type="button" class="btn btn-white step3 yellow" value="mosquite-no">
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step3 step-icon yellow" value="mosquite-no">
                         <img id="yellow-abdomen-icon" src="/static/img/mosquito-alert/yellow-abdomen.svg" width="70"/>
                         <img id="yellow-abdomen-icon-check" src="/static/img/mosquito-alert/yellow-abdomen-check.svg" style="display:none" width="70"/>
                         <p class="no-margin" style="margin-left:-14px;"><i id="yellow-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
@@ -737,9 +742,9 @@ function updateQuestions() {
     var question3 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
     question1.addClass('step1');
-    question2.text('¿Qué tipo de mosquito es?');
+    question2.text('¿Qué mosquito podría ser?');
     question2.addClass('step2');
-    question3.text('¿Por qué partes lo has reconocido?');
+    question3.text('¿Qué has reconocido?');
     question3.addClass('step3');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
