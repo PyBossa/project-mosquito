@@ -685,16 +685,18 @@ pybossa.taskLoaded(function(task, deferred) {
                         }
         task.step = 'step1';
         // load image
-        var img = $('<img />');
-        img.load(function() {
+        var img_thumbnail = $('<img />');
+        var img_full = $('<img/>')
+        img_thumbnail.load(function() {
             // continue as soon as the image is loaded
             deferred.resolve(task);
         });
         var this_turnip = 'q0n50KN2Tg1O0Zh';
-        img.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/medium');
-        console.log(img);
-        img.css('max-width', '100%');
-        task.info.image = img;
+        img_thumbnail.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/medium');
+        img_full.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/full');
+        img_thumbnail.css('max-width', '100%');
+        task.info.image = img_thumbnail;
+        task.info.image_full = img_full;
     }
     else {
         deferred.resolve(task);
@@ -823,9 +825,14 @@ pybossa.presentTask(function(task, deferred) {
             var div = $("<div/>");
             div.addClass("swiper-slide");
             var img = task.info.image.clone();
-            img.addClass("magnifik");
+            var a = $("<a/>");
+            a.attr("href", task.info.image_full.attr("src"));
+            a.addClass("magnifik");
+            console.log(task.info.image_full.attr("src"));
+            //img.addClass("magnifik");
             img.attr("id", task.id + "-" + "hammer");
-            div.append(img);
+            a.append(img)
+            div.append(a);
             $(".swiper-wrapper-images").append(div);
             var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
                          var pinch = new Hammer.Pinch();
@@ -843,7 +850,7 @@ pybossa.presentTask(function(task, deferred) {
         swiper.slideTo(0);
         swiper.update(true);
 
-        $('.magnifik').magnifik({seekImage: false, stage: $("#stage")});
+        $('.magnifik').magnifik({seekImage: false, stage: $("#stage"), ratio: 8});
 
         $(".zoom-icon").off('click').on('click', function(){
                 $(".magnifik").magnifik('open');
