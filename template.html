@@ -283,6 +283,8 @@
 
 </style>
 <script src="/static/js/vendor/hammer.min.js"></script>
+<link rel="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
 <div id="help1container" class="container help-full help1">
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
@@ -702,14 +704,58 @@ pybossa.taskLoaded(function(task, deferred) {
         // load image
         var img_thumbnail = $('<img />');
         var img_full = $('<img/>')
-        img_thumbnail.load(function() {
-            // continue as soon as the image is loaded
-            deferred.resolve(task);
-        });
+        //img_thumbnail.load(function() {
+        //    // continue as soon as the image is loaded
+        //    deferred.resolve(task);
+        //});
         var this_turnip = 'q0n50KN2Tg1O0Zh';
         img_thumbnail.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/medium');
         img_full.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/full');
         img_thumbnail.css('max-width', '100%');
+        img_full.on('load', function(){
+            console.log('My width is: ', this.naturalWidth);
+	        console.log('My height is: ', this.naturalHeight);
+            task.width = this.naturalWidth;
+            task.height = this.naturalHeight;
+
+            task.extent = [0, 0, task.width, task.height];
+
+            task.initialResolutions = {};
+            task.initialCenters= {};
+            task.zoomed = false;
+
+            task.projection = new ol.proj.Projection({
+                code: 'pybossa',
+                units: 'pixels',
+                extent: task.extent
+              });
+
+            task.map = new ol.Map({
+                controls: [], 
+              layers: [
+                new ol.layer.Image({
+                  source: new ol.source.ImageStatic({
+                    url: task.info.image_full.attr("src"),
+                    projection: task.projection,
+                    imageExtent: task.extent
+                  })
+                })
+              ],
+              view: new ol.View({
+                projection: task.projection,
+                center: ol.extent.getCenter(task.extent),
+                zoom: 0,
+                minResolution: 1,
+                maxResolution: 8,
+                extent: task.extent
+                
+              })
+            });
+
+
+            deferred.resolve(task);
+
+        });
         task.info.image = img_thumbnail;
         task.info.image_full = img_full;
     }
@@ -718,7 +764,7 @@ pybossa.taskLoaded(function(task, deferred) {
     }
 });
 
-function saveAnswerAndClean(task, swiper, deferred) {
+function saveAnswerAndClean(task, deferred) {
     $(".magnifik").magnifik('close');
     $(".step1").hide();
     $(".step2").hide();
@@ -747,7 +793,7 @@ function saveAnswerAndClean(task, swiper, deferred) {
 
         var deleteInstance = true;
         var cleanupStyles = false;
-        swiper.destroy(deleteInstance, cleanupStyles);
+        task.swiper.destroy(deleteInstance, cleanupStyles);
         deferred.resolve();
     });
 
@@ -840,36 +886,73 @@ pybossa.presentTask(function(task, deferred) {
             var div = $("<div/>");
             div.addClass("swiper-slide");
             var img = task.info.image.clone();
-            var a = $("<a/>");
-            a.attr("href", task.info.image_full.attr("src"));
-            a.addClass("magnifik");
-            console.log(task.info.image_full.attr("src"));
+            var a = $("<div/>");
+            a.attr("id", task.id + "-photo");
+            a.addClass("map");
+            a.css("width", "100%");
+            a.css("height", "100%");
+            //a.attr("href", task.info.image_full.attr("src"));
+            //a.addClass("magnifik");
+            //console.log(task.info.image_full.attr("src"));
             //img.addClass("magnifik");
-            img.attr("id", task.id + "-" + "hammer");
-            a.append(img)
+            //img.attr("id", task.id + "-" + "hammer");
+            //a.append(img)
             div.append(a);
+            //task.map.setTarget(task.id + "-photo");
             $(".swiper-wrapper-images").append(div);
-            var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
-                         var pinch = new Hammer.Pinch();
-                         mc.add([pinch]);
-                         mc.on("pinch", function(ev) {
-                                 $(".magnifik").magnifik('open', ev);
-                         });
+            //var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
+            //             var pinch = new Hammer.Pinch();
+            //             mc.add([pinch]);
+            //             mc.on("pinch", function(ev) {
+            //                     $(".magnifik").magnifik('open', ev);
+            //             });
         // }
 
-        var swiper = new Swiper('.swiper-container', {
+        task.swiper = new Swiper('.swiper-container', {
                 pagination: '.swiper-pagination',
                 paginationClickable: true
             });
 
-        swiper.slideTo(0);
-        swiper.update(true);
+        task.swiper.slideTo(0);
+        task.swiper.update(true);
 
-        $('.magnifik').magnifik({seekImage: false, stage: $("#stage"), ratio: 8});
+        task.map.setTarget(task.id + "-photo");
 
-        $(".zoom-icon").off('click').on('click', function(){
-                $(".magnifik").magnifik('open');
-                });
+
+            task.initialResolutions[task.id + "-photo"] = task.map.getView().getResolution();
+            task.initialCenters[task.id + "-photo"] = task.map.getView().getCenter();
+
+            task.map.getView().on('propertychange', function(e) {
+               switch (e.key) {
+                  case 'resolution':
+                    var curResolution = e.target.get(e.key);
+                    var currentMap = task.swiper.activeIndex;
+                    var id = task.id + "-photo";
+                    if (curResolution < task.initialResolutions[id]) {
+                        $(".swiper-button-next").hide();
+                        $(".swiper-button-prev").hide();
+                        task.swiper.detachEvents();
+                    }
+                    else {
+                        $(".swiper-button-next").show();
+                        $(".swiper-button-prev").show();
+                        task.swiper.attachEvents();
+                    }
+                    break;
+               }
+            });
+
+            task.map.on('dblclick', function(e){
+                if (task.zoomed) {
+                    e.preventDefault();
+                    task.zoomed = false;
+                    var tmp = task.initialResolutions[task.id + "-photo"];
+                    e.map.getView().setZoom(0);
+                }
+                else {
+                    task.zoomed = true;
+                }
+        });
 
         $('.btn-answer.step1').off('click').on('click', function(evt) {
             var $btn = $(this);
@@ -880,7 +963,7 @@ pybossa.presentTask(function(task, deferred) {
                 console.log("Step 1 completed");
                 console.log(task.answer);
                 if ((answer === 'no') || (answer === 'unknown')) {
-                   saveAnswerAndClean(task, swiper, deferred);
+                   saveAnswerAndClean(task, deferred);
                 }
                 else {
                     task.step = 'step2';
@@ -989,7 +1072,7 @@ pybossa.presentTask(function(task, deferred) {
                     $(".step3.yellow").show();
                 }
                 else {
-                saveAnswerAndClean(task, swiper, deferred);
+                saveAnswerAndClean(task, deferred);
                 }
 
             }
@@ -1014,7 +1097,7 @@ pybossa.presentTask(function(task, deferred) {
                 console.log("Step 3 completed");
                 console.log(task.answer);
 
-                saveAnswerAndClean(task, swiper, deferred);
+                saveAnswerAndClean(task, deferred);
             }
             else {
                 pybossaNotify('Unexpected type of answer.', true, 'error');
