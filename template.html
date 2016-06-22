@@ -34,6 +34,15 @@
         color: white;
     }
 
+    .fa-funnel.step2 {
+        background-color: #2E9380;
+    }
+
+    .fa-funnel.step3 {
+        background-color: #114F43;
+    }
+
+
     .navbar-brand {
         padding: 17px 15px;
         width: 0;
@@ -147,6 +156,10 @@
         z-index: 1;
         min-height: 100px;
     }
+
+    .btn-group-answer-bottom.mini {
+        min-height: 0px;
+    }
     .btn-group-answer-bottom button {
         padding-left: 0;
         padding-right: 0;
@@ -231,7 +244,8 @@
     .step2,
     .step3,
     .step3.tiger,
-    .step3.yellow {
+    .step3.yellow,
+    .step4 {
         display:none;
     }
 
@@ -279,6 +293,14 @@
     }
     .non-readable a {
         font-size: 12px;
+    }
+
+    .bodyparts {
+        text-align: center;
+    }
+
+    .bodyparts > img {
+        display: inline-block;
     }
 
 </style>
@@ -442,6 +464,30 @@
             <div class="swiper-pagination"></div>
         </div>
     </div>
+
+    <div class="row step3">
+        <!-- Tiger -->
+        <div class="col-xs-12 step3 bodyparts tiger torax">
+             <img id="tiger-torax-icon" src="http://i.imgur.com/PHPuc8l.png" width="100"/>
+        </div>
+        <!-- Yellow -->
+        <div class="col-xs-12 step3 bodyparts yellow torax">
+               <img id="yellow-torax-icon" src="http://i.imgur.com/hZlv8lr.png" width="100"/>
+        </div>
+    </div>
+
+    <div class="row step4">
+        <!-- Tiger -->
+            <div class="col-xs-12 step4 bodyparts tiger abdomen">
+              <img id="tiger-abdomen-icon" src="http://i.imgur.com/8uccfud.png" width="100"/>
+        </div>
+        <!-- Yellow -->
+        <div class="col-xs-12 step4 bodyparts yellow abdomen">
+              <img id="yellow-abdomen-icon" src="http://i.imgur.com/9gkaHlD.png" width="100"/>
+        </div>
+    </div>
+
+
     <div class="col-xs-12 col-sm-6 btn-group-answer-bottom">
         <!--<div id="question"></div>-->
             <div class="row">
@@ -475,33 +521,19 @@
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button id="tiger-torax" type="button" class="btn btn-white step3 step-icon tiger" value="mosquite-yes">
-                        <img id="tiger-torax-icon" src="http://i.imgur.com/PHPuc8l.png" width="100"/>
-                        <img id="tiger-torax-icon-check" src="http://i.imgur.com/gJ3fH2o.png" style="display:none" width="100"/>
-                        <p class="no-margin" style="margin-left:-14px;"><i id="tiger-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Torax</p>
-                    </button>
-
-                    <button id="yellow-torax" type="button" class="btn btn-white step3 step-icon yellow" value="mosquite-yes">
-                        <img id="yellow-torax-icon" src="http://i.imgur.com/hZlv8lr.png" width="100"/>
-                        <img id="yellow-torax-icon-check" src="http://i.imgur.com/87xWKZF.png" style="display:none" width="100"/>
-                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-torax-check" class="fa fa-check green" style="visibility:hidden;"></i> Tórax</p>
-                    </button>
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="yes">Sí</button>
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="yes">Sí</button>
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="yes">Sí</button>
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="yes">Sí</button>
 
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button id="tiger-abdomen" type="button" class="btn btn-white step3 step-icon tiger" value="mosquite-no">
-                        <img id="tiger-abdomen-icon" src="http://i.imgur.com/8uccfud.png" width="100"/>
-                        <img id="tiger-abdomen-icon-check" src="http://i.imgur.com/wjhalmb.png" style="display:none" width="100"/>
-                        <p class="no-margin" style="margin-left:-14px;"><i id="tiger-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
-                    </button>
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="no">No</button>
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="no">No</button>
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="no">No</button>
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="no">No</button>
 
-                    <button id="yellow-abdomen" type="button" class="btn btn-white step3 step-icon yellow" value="mosquite-no">
-                        <img id="yellow-abdomen-icon" src="http://i.imgur.com/9gkaHlD.png" width="100"/>
-                        <img id="yellow-abdomen-icon-check" src="http://i.imgur.com/vWrIntO.png" style="display:none" width="100"/>
-                        <p class="no-margin" style="margin-left:-14px;"><i id="yellow-abdomen-check" class="fa fa-check green" style="visibility:hidden;"  ></i> Abdomen</p>
-                    </button>
                 </div>
-                <button id="none-features" type="button" class="btn btn-white btn-extra-step btn-block btn-answer step3" value="tiger-unkown">Ninguna de las dos</button>
             </div>
         </div>
     </div>
@@ -803,12 +835,15 @@ function updateQuestions() {
     var question1 = $("<h4/>");
     var question2 = $("<h4/>");
     var question3 = $("<h4/>");
+    var question4 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
     question1.addClass('step1');
     question2.text('¿Qué mosquito podría ser?');
     question2.addClass('step2');
-    question3.text('¿Qué has reconocido?');
+    question3.text('¿Reconoces el tórax?');
     question3.addClass('step3');
+    question4.text('¿Y el abdomen?');
+    question4.addClass('step4');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
     if (mq.matches) {
@@ -817,6 +852,7 @@ function updateQuestions() {
         $("#question").append(question1);
         $("#question").append(question2);
         $("#question").append(question3);
+        $("#question").append(question4);
     }
     else {
         console.log("<768");
@@ -824,6 +860,7 @@ function updateQuestions() {
         $("#question").append(question1);
         $("#question").append(question2);
         $("#question").append(question3);
+        $("#question").append(question4);
     }
 
     $(".step1").show();
@@ -984,67 +1021,6 @@ pybossa.presentTask(function(task, deferred) {
             $(this).addClass("mobileHoverFix");
         });
 
-        $("#tiger-torax").off('click').on('click', function(){
-                $("#tiger-torax-icon").toggle();
-                $("#tiger-torax-icon-check").toggle();
-                toggleVisibility($("#tiger-torax-check"));
-                if ($("#tiger-torax-icon-check:visible").length == 0)
-                    {
-                    task.answer.tigerTorax = 'no';
-                }
-                else {
-                    task.answer.tigerTorax = 'yes';
-                }
-                toggleFeaturesText(task);
-                console.log(task.answer);
-                });
-
-        $("#tiger-abdomen").off('click').on('click', function(){
-                $("#tiger-abdomen-icon").toggle();
-                $("#tiger-abdomen-icon-check").toggle();
-                toggleVisibility($("#tiger-abdomen-check"));
-                if ($("#tiger-abdomen-icon-check:visible").length == 0)
-                    {
-                    task.answer.tigerAbdomen = 'no';
-                }
-                else {
-                    task.answer.tigerAbdomen = 'yes';
-                }
-                toggleFeaturesText(task);
-                console.log(task.answer);
-                });
-
-        $("#yellow-torax").off('click').on('click', function(){
-                $("#yellow-torax-icon").toggle();
-                $("#yellow-torax-icon-check").toggle();
-                toggleVisibility($("#yellow-torax-check"));
-                if ($("#yellow-torax-icon-check:visible").length == 0)
-                    {
-                    task.answer.yellowTorax = 'no';
-                }
-                else {
-                    task.answer.yellowTorax = 'yes';
-                }
-                toggleFeaturesText(task);
-                console.log(task.answer);
-                });
-
-        $("#yellow-abdomen").off('click').on('click', function(){
-                $("#yellow-abdomen-icon").toggle();
-                $("#yellow-abdomen-icon-check").toggle();
-                toggleVisibility($("#yellow-abdomen-check"));
-                if ($("#yellow-abdomen-icon-check:visible").length == 0)
-                    {
-                    task.answer.yellowAbdomen = 'no';
-                }
-                else {
-                    task.answer.yellowAbdomen = 'yes';
-                }
-                toggleFeaturesText(task);
-                console.log(task.answer);
-                });
-
-
 
         $('.btn-answer.step2').off('click').on('click', function(evt) {
             var $btn = $(this);
@@ -1060,16 +1036,26 @@ pybossa.presentTask(function(task, deferred) {
                     showHelp(task.step);
                     $(".step2").hide();
                     $(".step3").show();
-                    $(".step3.yellow").hide();
-                    $(".step3.tiger").show();
+                    $(".step3.bodyparts.yellow").hide();
+                    $(".step3.bodyparts.yellow.torax").hide();
+                    $(".step3.yellow.btn-parts").hide();
+                    $(".step3.bodyparts.tiger").show();
+                    $(".step3.bodyparts.tiger.torax").show();
+                    $(".step3.tiger.btn-parts").show();
+                    $(".btn-group-answer-bottom").addClass('mini');
                 }
                 else if (answer === 'yellow') {
                     task.step = 'step3';
                     showHelp(task.step);
                     $(".step2").hide();
                     $(".step3").show();
-                    $(".step3.tiger").hide();
-                    $(".step3.yellow").show();
+                    $(".step3.bodyparts.tiger").hide();
+                    $(".step3.bodyparts.tiger.torax").hide();
+                    $(".step3.tiger.btn-parts").hide();
+                    $(".step3.bodyparts.yellow").show();
+                    $(".step3.bodyparts.yellow.torax").show();
+                    $(".step3.yellow.btn-parts").show();
+                    $(".btn-group-answer-bottom").addClass('mini');
                 }
                 else {
                 saveAnswerAndClean(task, deferred);
@@ -1080,6 +1066,59 @@ pybossa.presentTask(function(task, deferred) {
                 pybossaNotify('Unexpected type of answer.', true, 'error');
             }
         });
+
+
+        $(".btn-parts").off('click').on('click', function(){
+                var answer = $(this).attr("value");
+                console.log($(this).attr("id"));
+                if (task.answer.type === 'tiger') {
+                    if (($(this).attr("id") === 'tiger-torax') && (answer === 'no')) {
+                        task.answer.tigerTorax = 'no';
+                    }
+                    if (($(this).attr("id") === 'tiger-torax') && (answer === 'yes')) {
+                        task.answer.tigerTorax = 'yes';
+                        $(".step3").hide();
+                        $(".step4").show()
+                        $(".step4.tiger").show();
+                        $(".step4.yellow").hide();
+                        task.step = 'step4';
+
+                    }
+
+                    if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'no')) {
+                        task.answer.tigerAbdomen = 'no';
+                    }
+                    if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'yes')) {
+                        task.answer.tigerAbdomen = 'yes';
+                    }
+                }
+
+                if (task.answer.type === 'yellow') {
+                    if (($(this).attr("id") === 'yellow-torax') && (answer === 'no')) {
+                        task.answer.yellowTorax = 'no';
+                    }
+                    if (($(this).attr("id") === 'yellow-torax') && (answer === 'yes')) {
+                        task.answer.yellowTorax = 'yes';
+
+                        $(".step3").hide();
+                        $(".step4").show()
+                        $(".step4.yellow").show();
+                        $(".step4.tiger").hide();
+                        task.step = 'step4';
+
+                    }
+
+                    if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'no')) {
+                        task.answer.yellowAbdomen = 'no';
+                    }
+                    if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'yes')) {
+                        task.answer.yellowAbdomen = 'yes';
+                    }
+
+                }
+
+                });
+
 
         $(".btn-answer").on("touchstart", function(){
             $(this).removeClass("mobileHoverFix");
