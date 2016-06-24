@@ -801,8 +801,16 @@ function saveAnswerAndClean(task, deferred) {
     $(".step1").hide();
     $(".step2").hide();
     $(".step3").hide();
+    $(".step4").hide();
     $(".step3.tiger").hide();
     $(".step3.yellow").hide();
+    $(".step4.tiger").hide();
+    $(".step4.yellow").hide();
+    $(".secondnav").removeClass("step1");
+    $(".secondnav").removeClass("step2");
+    $(".secondnav").removeClass("step3");
+    $(".secondnav").removeClass("step4");
+    $(".secondnav").show();
     pybossa.saveTask(task.id, task.answer).done(function() {
         // Reset torax and abdomen buttons
         $("#tiger-torax-icon").css("display", "inline");
@@ -1083,6 +1091,7 @@ pybossa.presentTask(function(task, deferred) {
                 if (task.answer.type === 'tiger') {
                     if (($(this).attr("id") === 'tiger-torax') && (answer === 'no')) {
                         task.answer.tigerTorax = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'tiger-torax') && (answer === 'yes')) {
                         task.answer.tigerTorax = 'yes';
@@ -1098,15 +1107,19 @@ pybossa.presentTask(function(task, deferred) {
 
                     if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'no')) {
                         task.answer.tigerAbdomen = 'no';
+                        saveAnswerAndClean(task, deferred);
+
                     }
                     if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'yes')) {
                         task.answer.tigerAbdomen = 'yes';
+                        saveAnswerAndClean(task, deferred);
                     }
                 }
 
                 if (task.answer.type === 'yellow') {
                     if (($(this).attr("id") === 'yellow-torax') && (answer === 'no')) {
                         task.answer.yellowTorax = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'yellow-torax') && (answer === 'yes')) {
                         task.answer.yellowTorax = 'yes';
@@ -1122,9 +1135,11 @@ pybossa.presentTask(function(task, deferred) {
 
                     if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'no')) {
                         task.answer.yellowAbdomen = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'yes')) {
                         task.answer.yellowAbdomen = 'yes';
+                        saveAnswerAndClean(task, deferred);
                     }
 
                 }
