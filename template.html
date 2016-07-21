@@ -637,7 +637,16 @@ function toggleFeaturesText(task) {
 }
 
 function i18n_translate() {
-    var ids = Object.keys(messages[userLocale])
+    // detect browser language
+    var userLang = navigator.language || navigator.userLanguage;
+    var re = new RegExp("^es.*");
+    if (re.test(userLang)) {
+        userLocale = "es";
+    } else {
+        userLocale = "en";
+    }
+
+    var ids = Object.keys(messages[userLocale]);
     for (i=0; i<ids.length; i++) {
         console.log("Translating: " + ids[i]);
         document.getElementById(ids[i]).innerHTML = messages[userLocale][ids[i]];
@@ -780,7 +789,7 @@ pybossa.taskLoaded(function(task, deferred) {
                 minResolution: 1,
                 maxResolution: 8,
                 extent: task.extent
-                
+
               })
             });
 
@@ -874,7 +883,7 @@ $(window).resize(function() {
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         $(".swiper-wrapper-images").html("");
-        //i18n_translate();
+        i18n_translate();
 
         updateQuestions();
 
