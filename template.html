@@ -495,13 +495,13 @@
                 <div class="col-xs-6 text-center">
                     <button type="button" class="btn btn-white btn-answer step1" value="no">No</button>
                 </div>
-                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step1" value="unknown">No lo tengo claro</button>
+                <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step1" value="unknown"><span id="i18n_notsurebtn">No lo tengo claro</span></button>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
                     <button type="button" class="btn btn-white btn-answer step2 step-icon" value="tiger">
                         <img src="http://i.imgur.com/j3ErVjA.png" width="100"/>
-                        <p class="no-margin">
+                        <p id="i18n_tigerbtn" class="no-margin">
                         Tigre
                         </p>
                     </button>
@@ -509,27 +509,27 @@
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
                     <button type="button" class="btn btn-white btn-answer step2 step-icon" value="yellow">
                         <img src="http://i.imgur.com/XoRAxRg.png" width="100"/>
-                        <p class="no-margin">
+                        <p id="i18n_yellowfeverbtn" class="no-margin">
                         Fiebre Amarilla
                         </p>
                     </button>
                 </div>
-            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown">No lo tengo claro</button>
+            <button type="button" class="btn btn-white btn-extra-step btn-block btn-answer step2" value="tiger-unkown"><span id="i18n_notsurebtn2">No lo tengo claro</span></button>
             </div>
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center left">
-                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="yes">Sí</button>
-                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="yes">Sí</button>
-                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="yes">Sí</button>
-                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="yes">Sí</button>
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="yes"><span id="i18n_yesbtn1">Sí</span></button>
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="yes"><span id="i18n_yesbtn2">Sí</span></button>
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="yes"><span id="i18n_yesbtn3">Sí</span></button>
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="yes"><span id="i18n_yesbtn4">Sí</span></button>
 
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="no">No</button>
-                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="no">No</button>
-                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="no">No</button>
-                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="no">No</button>
+                    <button id="tiger-torax" type="button" class="btn btn-white step3 tiger btn-parts torax" value="no"><span id="i18n_nobtn1">No</span></button>
+                    <button id="yellow-torax" type="button" class="btn btn-white step3 yellow btn-parts torax" value="no"><span id="i18n_nobtn2">No</span></button>
+                    <button id="tiger-abdomen" type="button" class="btn btn-white step4 tiger btn-parts abdomen" value="no"><span id="i18n_nobtn3">No</span></button>
+                    <button id="yellow-abdomen" type="button" class="btn btn-white step4 yellow btn-parts abdomen" value="no"><span id="i18n_nobtn4">No</span></button>
 
                 </div>
             </div>
@@ -578,7 +578,18 @@ var messages = {"en": {
                         "i18n_abdomen4": "Abdomen",
                         "i18n_understood": "Understood!",
                         "i18n_zoominfo": "Touch the picture to enlarge.",
-
+                        "i18n_notsurebtn": "I'm not sure",
+                        "i18n_tigerbtn": "Tiger",
+                        "i18n_yellowfeverbtn": "Yellow fever",
+                        "i18n_notsurebtn2": "I'm not sure",
+                        "i18n_yesbtn1": "Yes",
+                        "i18n_yesbtn2": "Yes",
+                        "i18n_yesbtn3": "Yes",
+                        "i18n_yesbtn4": "Yes",
+                        "i18n_nobtn1": "No",
+                        "i18n_nobtn2": "No",
+                        "i18n_nobtn3": "No",
+                        "i18n_nobtn4": "No",
                       }
                };
 
