@@ -34,12 +34,16 @@
         color: white;
     }
 
-    .fa-funnel.step2 {
+    .secondnav.step2 {
         background-color: #2E9380;
     }
 
-    .fa-funnel.step3 {
+    .secondnav.step3 {
         background-color: #114F43;
+    }
+
+    .secondnav.step4 {
+        background-color: #06382E;
     }
 
 
@@ -261,14 +265,15 @@
         color: #546e7b;
     }
 
-    /* #question {
-        margin-top:35px;
-    }*/
+    #question {
+        display: flex;
+        justify-content: space-around;
+    }
 
     #question h4 {
         font-size: 16px;
         color: white;
-        margin-top: 23px;
+        margin-top: 16px;
     }
 
     .help-full{
@@ -404,28 +409,20 @@
     <div class="row">
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h3 class="dark-color">¿Por qué partes lo has reconocido?</h3>
-            <p>Marca aquellas partes del mosquito que te han ayudado a identificarlo: su tórax o abdomen (puedes marcar las dos).</p>
+            <p>La parte más identificativa del mosquito es el dibujo del tórax. ¿Reconoces el dibujo en la imagen?</p>
             <h3>Mosquito Tigre</h3>
             <div class="row">
-                <div class="col-xs-6">
-                    <img src="http://i.imgur.com/gJ3fH2o.png" width="100px">
+                <div class="col-xs-12">
+                    <img src="http://i.imgur.com/PHPuc8l.png" width="100px">
                     <p>Tórax</p>
-                </div>
-                <div class="col-xs-6">
-                    <img src="/http://i.imgur.com/8uccfud.png" width="100px">
-                    <p>Abdomen</p>
                 </div>
             </div>
 
             <h3>Mosquito Fiebre Amarilla</h3>
             <div class="row">
-                <div class="col-xs-6">
-                    <img src="http://i.imgur.com/87xWKZF.png" width="100px">
+                <div class="col-xs-12">
+                    <img src="http://i.imgur.com/hZlv8lr.png" width="100px">
                     <p>Tórax</p>
-                </div>
-                <div class="col-xs-6">
-                    <img src="http://i.imgur.com/vWrIntO.png" width="100px">
-                    <p>Abdomen</p>
                 </div>
             </div>
         </div>
@@ -465,7 +462,6 @@
         </div>
     </div>
 
-    <div class="row step3">
         <!-- Tiger -->
         <div class="col-xs-12 step3 bodyparts tiger torax">
              <img id="tiger-torax-icon" src="http://i.imgur.com/PHPuc8l.png" width="100"/>
@@ -474,9 +470,7 @@
         <div class="col-xs-12 step3 bodyparts yellow torax">
                <img id="yellow-torax-icon" src="http://i.imgur.com/hZlv8lr.png" width="100"/>
         </div>
-    </div>
 
-    <div class="row step4">
         <!-- Tiger -->
             <div class="col-xs-12 step4 bodyparts tiger abdomen">
               <img id="tiger-abdomen-icon" src="http://i.imgur.com/8uccfud.png" width="100"/>
@@ -485,7 +479,6 @@
         <div class="col-xs-12 step4 bodyparts yellow abdomen">
               <img id="yellow-abdomen-icon" src="http://i.imgur.com/9gkaHlD.png" width="100"/>
         </div>
-    </div>
 
 
     <div class="col-xs-12 col-sm-6 btn-group-answer-bottom">
@@ -746,7 +739,7 @@ pybossa.taskLoaded(function(task, deferred) {
         img_thumbnail.css('max-width', '100%');
         img_full.on('load', function(){
             console.log('My width is: ', this.naturalWidth);
-	        console.log('My height is: ', this.naturalHeight);
+            console.log('My height is: ', this.naturalHeight);
             task.width = this.naturalWidth;
             task.height = this.naturalHeight;
 
@@ -801,8 +794,16 @@ function saveAnswerAndClean(task, deferred) {
     $(".step1").hide();
     $(".step2").hide();
     $(".step3").hide();
+    $(".step4").hide();
     $(".step3.tiger").hide();
     $(".step3.yellow").hide();
+    $(".step4.tiger").hide();
+    $(".step4.yellow").hide();
+    $(".secondnav").removeClass("step1");
+    $(".secondnav").removeClass("step2");
+    $(".secondnav").removeClass("step3");
+    $(".secondnav").removeClass("step4");
+    $(".secondnav").show();
     pybossa.saveTask(task.id, task.answer).done(function() {
         // Reset torax and abdomen buttons
         $("#tiger-torax-icon").css("display", "inline");
@@ -837,13 +838,13 @@ function updateQuestions() {
     var question3 = $("<h4/>");
     var question4 = $("<h4/>");
     question1.text('¿Ves un mosquito en esta foto?');
-    question1.addClass('step1');
+    question1.addClass('step1 animated fadeIn');
     question2.text('¿Qué mosquito podría ser?');
-    question2.addClass('step2');
-    question3.text('¿Reconoces el tórax?');
-    question3.addClass('step3');
-    question4.text('¿Y el abdomen?');
-    question4.addClass('step4');
+    question2.addClass('step2 animated fadeIn');
+    question3.text('¿Reconoces el dibujo del tórax?');
+    question3.addClass('step3 animated fadeIn');
+    question4.text('¿Y el dibujo del abdomen?');
+    question4.addClass('step4 animated fadeIn');
 
     var mq = window.matchMedia( "(min-width: 768px)" );
     if (mq.matches) {
@@ -863,6 +864,10 @@ function updateQuestions() {
         $("#question").append(question4);
     }
 
+    $(".secondnav").removeClass("step1");
+    $(".secondnav").removeClass("step2");
+    $(".secondnav").removeClass("step3");
+    $(".secondnav").removeClass("step4");
     $(".step1").show();
 
 }
@@ -1003,6 +1008,7 @@ pybossa.presentTask(function(task, deferred) {
                    saveAnswerAndClean(task, deferred);
                 }
                 else {
+                    $(".secondnav").addClass("step2");
                     task.step = 'step2';
                     showHelp(task.step);
                     $(".step1").hide();
@@ -1033,6 +1039,8 @@ pybossa.presentTask(function(task, deferred) {
 
                 if (answer === 'tiger') {
                     task.step = 'step3';
+                    $(".secondnav").removeClass("step2");
+                    $(".secondnav").addClass("step3");
                     showHelp(task.step);
                     $(".step2").hide();
                     $(".step3").show();
@@ -1046,6 +1054,8 @@ pybossa.presentTask(function(task, deferred) {
                 }
                 else if (answer === 'yellow') {
                     task.step = 'step3';
+                    $(".secondnav").removeClass("step2");
+                    $(".secondnav").addClass("step3");
                     showHelp(task.step);
                     $(".step2").hide();
                     $(".step3").show();
@@ -1074,9 +1084,12 @@ pybossa.presentTask(function(task, deferred) {
                 if (task.answer.type === 'tiger') {
                     if (($(this).attr("id") === 'tiger-torax') && (answer === 'no')) {
                         task.answer.tigerTorax = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'tiger-torax') && (answer === 'yes')) {
                         task.answer.tigerTorax = 'yes';
+                        $(".secondnav").removeClass("step3");
+                        $(".secondnav").addClass("step4");
                         $(".step3").hide();
                         $(".step4").show()
                         $(".step4.tiger").show();
@@ -1087,19 +1100,24 @@ pybossa.presentTask(function(task, deferred) {
 
                     if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'no')) {
                         task.answer.tigerAbdomen = 'no';
+                        saveAnswerAndClean(task, deferred);
+
                     }
                     if (($(this).attr("id") === 'tiger-abdomen') && (answer === 'yes')) {
                         task.answer.tigerAbdomen = 'yes';
+                        saveAnswerAndClean(task, deferred);
                     }
                 }
 
                 if (task.answer.type === 'yellow') {
                     if (($(this).attr("id") === 'yellow-torax') && (answer === 'no')) {
                         task.answer.yellowTorax = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'yellow-torax') && (answer === 'yes')) {
                         task.answer.yellowTorax = 'yes';
-
+                        $(".secondnav").removeClass("step3");
+                        $(".secondnav").addClass("step4");
                         $(".step3").hide();
                         $(".step4").show()
                         $(".step4.yellow").show();
@@ -1110,9 +1128,11 @@ pybossa.presentTask(function(task, deferred) {
 
                     if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'no')) {
                         task.answer.yellowAbdomen = 'no';
+                        saveAnswerAndClean(task, deferred);
                     }
                     if (($(this).attr("id") === 'yellow-abdomen') && (answer === 'yes')) {
                         task.answer.yellowAbdomen = 'yes';
+                        saveAnswerAndClean(task, deferred);
                     }
 
                 }
