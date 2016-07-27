@@ -590,7 +590,15 @@ var messages = {"en": {
 $(document).ready(function(){
 //     userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
 // For Spanish only version, setting userLocal to 'es' and doing translation on page ready instead of present task (translation just to avoid changing all text above)
-userLocale = 'es';
+
+// detect browser language
+var userLang = navigator.language || navigator.userLanguage;
+var re = new RegExp("^es.*");
+if (re.test(userLang)) {
+    userLocale = "es";
+} else {
+    userLocale = "en";
+}
 $("footer").hide();
 // Move help containers to top body to get them fully overlayed
 $('#help1container').insertAfter('body');
@@ -622,15 +630,6 @@ function toggleFeaturesText(task) {
 }
 
 function i18n_translate() {
-    // detect browser language
-    var userLang = navigator.language || navigator.userLanguage;
-    var re = new RegExp("^es.*");
-    if (re.test(userLang)) {
-        userLocale = "es";
-    } else {
-        userLocale = "en";
-    }
-
     // placeholder for more languages
     if (userLocale === "en") {
         var ids = Object.keys(messages[userLocale]);
