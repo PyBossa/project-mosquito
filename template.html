@@ -584,7 +584,7 @@ var messages = {"en": {
                         "i18n_nobtn3": "No",
                         "i18n_nobtn4": "No"
                       },
-                "cat": {
+                "ca": {
                         "i18n_question1": "Veus un mosquit en aquesta foto?",
                         "i18n_easy_right": "Sembla fàcil, oi?",
                         "i18n_tellme": "Doncs digue’ns si veus un mosquit.",
@@ -645,7 +645,7 @@ var re = new RegExp("^es.*");
 if (re.test(userLang)) {
     userLocale = "es";
 } else if (userLang === "ca") {
-    userLocale = "cat";
+    userLocale = "ca";
 } else {
     userLocale = "en";
 }
@@ -899,7 +899,7 @@ function updateQuestions() {
         question2.text('¿Qué mosquito podría ser?');
         question3.text('¿Reconoces el dibujo del tórax?');
         question4.text('¿Y el dibujo del abdomen?');
-    } if (userLocale === 'cat') {
+    } if (userLocale === 'ca') {
         question1.text('¿Ves un mosquito en esta foto?');
         question2.text('¿Qué mosquito podría ser?');
         question3.text('Reconeixes el tòrax?');
