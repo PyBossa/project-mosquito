@@ -308,6 +308,11 @@
         display: inline-block;
     }
 
+    .btn-answer,
+    .btn-white {
+        width: 100%;
+    }
+
 </style>
 <script src="/static/js/vendor/hammer.min.js"></script>
 <link rel="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" rel="stylesheet" type="text/css">
@@ -642,7 +647,7 @@ $(document).ready(function(){
 // For Spanish only version, setting userLocal to 'es' and doing translation on page ready instead of present task (translation just to avoid changing all text above)
 
 // detect browser language
-var userLang = navigator.language || navigator.userLanguage;
+var userLang = navigator.languages[0] || navigator.language || navigator.userLanguage;
 var re = new RegExp("^es.*");
 if (re.test(userLang)) {
     userLocale = "es";
@@ -683,6 +688,7 @@ function toggleFeaturesText(task) {
 
 function i18n_translate() {
     // placeholder for more languages
+    console.log(userLocale);
     if (userLocale !== "es") {
         var ids = Object.keys(messages[userLocale]);
         for (i=0; i<ids.length; i++) {
