@@ -644,6 +644,8 @@ var userLang = navigator.language || navigator.userLanguage;
 var re = new RegExp("^es.*");
 if (re.test(userLang)) {
     userLocale = "es";
+} else if (userLang === "ca") {
+    userLocale = "cat";
 } else {
     userLocale = "en";
 }
@@ -897,6 +899,11 @@ function updateQuestions() {
         question2.text('¿Qué mosquito podría ser?');
         question3.text('¿Reconoces el dibujo del tórax?');
         question4.text('¿Y el dibujo del abdomen?');
+    } if (userLocale === 'cat') {
+        question1.text('¿Ves un mosquito en esta foto?');
+        question2.text('¿Qué mosquito podría ser?');
+        question3.text('Reconeixes el tòrax?');
+        question4.text('I l’abdomen?');
     } else {    // en
         question1.text('Do you see a mosquito in this photo?');
         question2.text('Which mosquito could it be?');
