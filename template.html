@@ -681,7 +681,7 @@ function toggleFeaturesText(task) {
 
 function i18n_translate() {
     // placeholder for more languages
-    if (userLocale === "en") {
+    if (userLocale !== "es") {
         var ids = Object.keys(messages[userLocale]);
         for (i=0; i<ids.length; i++) {
             console.log("Translating: " + ids[i]);
