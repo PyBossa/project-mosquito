@@ -313,6 +313,10 @@
         width: 100%;
     }
 
+    .min-20 {
+        min-height: 40px;
+    }
+
 </style>
 <script src="/static/js/vendor/hammer.min.js"></script>
 <link rel="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" rel="stylesheet" type="text/css">
@@ -415,19 +419,15 @@
         <div class="col-xs-12 col-md-offset-4 col-md-4 text-center">
             <h3 id="i18n_whichparts" class="dark-color">¿Por qué partes lo has reconocido?</h3>
             <p id="i18n_markparts">La parte más identificativa del mosquito es el dibujo del tórax. ¿Reconoces el dibujo en la imagen?</p>
-            <h3 id="i18n_tigermosquito">Mosquito Tigre</h3>
             <div class="row">
-                <div class="col-xs-12">
+                <h3 id="i18n_thorax3">Tórax</h3>
+                <div class="col-xs-6">
+                    <h4 class="min-20" id="i18n_tigermosquito">Mosquito Tigre</h4>
                     <img src="http://i.imgur.com/PHPuc8l.png" width="100px">
-                    <p id="i18n_thorax3">Tórax</p>
                 </div>
-            </div>
-
-            <h3 id="i18n_yellowfever2">Mosquito Fiebre Amarilla</h3>
-            <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-6">
+                    <h4 class="min-20" id="i18n_yellowfever2">Mosquito Fiebre Amarilla</h4>
                     <img src="http://i.imgur.com/hZlv8lr.png" width="100px">
-                    <p id="i18n_thorax4">Tórax</p>
                 </div>
             </div>
         </div>
@@ -693,7 +693,9 @@ function i18n_translate() {
         var ids = Object.keys(messages[userLocale]);
         for (i=0; i<ids.length; i++) {
             console.log("Translating: " + ids[i]);
-            document.getElementById(ids[i]).innerHTML = messages[userLocale][ids[i]];
+            if (document.getElementById(ids[i]) != null) {
+                document.getElementById(ids[i]).innerHTML = messages[userLocale][ids[i]];
+            }
         }
     }
 }
