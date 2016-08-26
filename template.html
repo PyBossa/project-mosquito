@@ -636,8 +636,30 @@ $(document).ready(function(){
 //     userLocale = document.getElementById('PYBOSSA_USER_LOCALE').textContent.trim();
 // For Spanish only version, setting userLocal to 'es' and doing translation on page ready instead of present task (translation just to avoid changing all text above)
 
+// parse url parameter
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
 // detect browser language
 var userLang = navigator.languages[0] || navigator.language || navigator.userLanguage;
+// url parameter for lang?
+var urlLang = getUrlParameter('lang')
+if (urlLang) {
+    userLang = urlLang;
+}
+// set language
 var re = new RegExp("^es.*");
 if (re.test(userLang)) {
     userLocale = "es";
@@ -654,6 +676,7 @@ $('#help2-1container').insertAfter('body');
 $('#help2-2container').insertAfter('body');
 $('#help3container').insertAfter('body');
 });
+
 
 function toggleVisibility(element) {
     if (element.css('visibility') === 'hidden') {
