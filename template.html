@@ -27,6 +27,9 @@
         width: 100%;
         height: 60px;
         right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
     .fa-funnel {
@@ -266,7 +269,7 @@
     #question h4 {
         font-size: 16px;
         color: white;
-        margin-top: 16px;
+        /* margin-top: 16px; */
     }
 
     .help-full{
@@ -437,9 +440,9 @@
 
 
 <div class="secondnav text-center">
-    <div id="question" class="navbar-nav">
+    <div id="question" class="">
     </div>
-    <div class="navbar-info-btn">
+    <div class="">
         <a id="info" href="#"><i class="fa fa-info-circle fa-funnel"></i></a>
     </div>
 </div>
@@ -1114,6 +1117,7 @@ pybossa.presentTask(function(task, deferred) {
                     showHelp(task.step);
                     $(".step1").hide();
                     $(".step2").show();
+                    $(".secondnav.step2").css("display", "flex");
                 }
             }
             else {
