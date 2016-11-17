@@ -34,7 +34,7 @@
 
     .fa-funnel {
         font-size: 24px !important;
-        color: white;
+        color: rgba(0,0,0,0.6);
     }
 
     .secondnav.step2 {
@@ -263,11 +263,12 @@
     #question {
         display: flex;
         justify-content: space-around;
+        width: 250px;
     }
 
     #question h4 {
         font-size: 16px;
-        color: white;
+        color: black;
         /* margin-top: 16px; */
     }
 
@@ -498,6 +499,9 @@
 
 
 <div class="secondnav text-center">
+    <div class="">
+        <a id="close" href="#"><i class="fa fa-times fa-funnel"></i></a>
+    </div>
     <div id="question" class="">
     </div>
     <div class="">
@@ -1069,6 +1073,10 @@ pybossa.presentTask(function(task, deferred) {
                     $(".help-full.help3").show();
                 }
                 });
+
+        $("#close").off('click').on('click', function(){
+            window.location.replace("http://mosquitoalert.pybossa.com");
+        });
 
 
         // for (i=0;i<task.info.images.length;i++) {
