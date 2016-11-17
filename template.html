@@ -107,7 +107,6 @@
 
     .swiper-container {
         width: 100%;
-        height: 240px;
         border: 1px solid grey;
         margin-top: 0px;
     }
@@ -318,7 +317,7 @@
     }
 
     .tutorial-img {
-        width: 100px;
+        width: 98px;
     }
 
     .tutorial-img.step3,
@@ -893,8 +892,8 @@ pybossa.taskLoaded(function(task, deferred) {
         img_full.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/full');
         img_thumbnail.css('max-width', '100%');
         img_full.on('load', function(){
-            console.log('My width is: ', this.naturalWidth);
-            console.log('My height is: ', this.naturalHeight);
+            //console.log('My width is: ', this.naturalWidth);
+            //console.log('My height is: ', this.naturalHeight);
             task.width = this.naturalWidth;
             task.height = this.naturalHeight;
 
@@ -1038,6 +1037,7 @@ pybossa.presentTask(function(task, deferred) {
         var h = document.documentElement.clientHeight;
 
         $("#stage").css("height", "240px");
+        $(".map").css("height", "240px");
 
         $("body").bind('magnifik:open', function(){
                 console.log("show");
@@ -1079,14 +1079,18 @@ pybossa.presentTask(function(task, deferred) {
             a.attr("id", task.id + "-photo");
             a.addClass("map");
             a.css("width", "100%");
-            a.css("height", "100%");
+            a.css("height", "240px");
             //a.attr("href", task.info.image_full.attr("src"));
             //a.addClass("magnifik");
-            //console.log(task.info.image_full.attr("src"));
+            console.log(task.info.image_full.attr("src"));
             //img.addClass("magnifik");
             //a.append(img)
             div.append(a);
             //task.map.setTarget(task.id + "-photo");
+            console.log("Current image extent");
+            console.log(task.extent);
+            console.log(task.width);
+            console.log(task.height);
             task.map = new ol.Map({
                 controls: [], 
               layers: [
