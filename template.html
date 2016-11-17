@@ -377,7 +377,7 @@
     }
 
 </style>
-<script src="/static/js/vendor/hammer.min.js"></script>
+<script src="http://crowdcrafting.org/static/js/vendor/magnifik.js"></script>
 <link rel="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
 <div id="help1container" class="container help-full help1">
@@ -910,27 +910,7 @@ pybossa.taskLoaded(function(task, deferred) {
                 extent: task.extent
               });
 
-            task.map = new ol.Map({
-                controls: [], 
-              layers: [
-                new ol.layer.Image({
-                  source: new ol.source.ImageStatic({
-                    url: task.info.image_full.attr("src"),
-                    projection: task.projection,
-                    imageExtent: task.extent
-                  })
-                })
-              ],
-              view: new ol.View({
-                projection: task.projection,
-                center: ol.extent.getCenter(task.extent),
-                zoom: 0,
-                minResolution: 1,
-                maxResolution: 8,
-                extent: task.extent
 
-              })
-            });
 
 
             deferred.resolve(task);
@@ -1104,17 +1084,31 @@ pybossa.presentTask(function(task, deferred) {
             //a.addClass("magnifik");
             //console.log(task.info.image_full.attr("src"));
             //img.addClass("magnifik");
-            //img.attr("id", task.id + "-" + "hammer");
             //a.append(img)
             div.append(a);
             //task.map.setTarget(task.id + "-photo");
+            task.map = new ol.Map({
+                controls: [], 
+              layers: [
+                new ol.layer.Image({
+                  source: new ol.source.ImageStatic({
+                    url: task.info.image_full.attr("src"),
+                    projection: task.projection,
+                    imageExtent: task.extent
+                  })
+                })
+              ],
+              view: new ol.View({
+                projection: task.projection,
+                center: ol.extent.getCenter(task.extent),
+                zoom: 0,
+                minResolution: 1,
+                maxResolution: 8,
+                extent: task.extent
+
+              })
+            });
             $(".swiper-wrapper-images").append(div);
-            //var mc = new Hammer.Manager(document.getElementById(task.id + "-" + "hammer"));
-            //             var pinch = new Hammer.Pinch();
-            //             mc.add([pinch]);
-            //             mc.on("pinch", function(ev) {
-            //                     $(".magnifik").magnifik('open', ev);
-            //             });
         // }
 
         task.swiper = new Swiper('.swiper-container', {
