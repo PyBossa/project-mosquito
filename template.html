@@ -17,7 +17,7 @@
         color: rgba(164, 31, 27, 1);
     }
 
-    .dark-color{color: black;}
+    .dark-color, .dark-title {color: black;}
 
     .secondnav {
         position: fixed;
@@ -82,7 +82,7 @@
         height: 100%;
         width: 100%;
         z-index: 99999999999999999999999999999;
-        color: white;
+        color: black !important;
     }
 
     .help2-1 h4,
@@ -892,8 +892,9 @@ pybossa.taskLoaded(function(task, deferred) {
         //    deferred.resolve(task);
         //});
         var this_turnip = 'q0n50KN2Tg1O0Zh';
-        img_thumbnail.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/medium');
-        img_full.attr('src', 'http://tigaserver.atrapaeltigre.com/get_photo/' + this_turnip + '/' + task.info.uuid + '/full');
+        var mosquito_server = 'http://webserver.mosquitoalert.com/get_photo/'
+        img_thumbnail.attr('src', mosquito_server + this_turnip + '/' + task.info.uuid + '/medium');
+        img_full.attr('src', mosquito_server + this_turnip + '/' + task.info.uuid + '/full');
         img_thumbnail.css('max-width', '100%');
         img_full.on('load', function(){
             //console.log('My width is: ', this.naturalWidth);
